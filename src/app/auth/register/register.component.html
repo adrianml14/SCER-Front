@@ -1,10 +1,49 @@
-<div class="register-container">
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
-    <h2>Register</h2>
-    <input formControlName="username" placeholder="Username" class="input-field" />
-    <input formControlName="email" placeholder="Email" class="input-field" />
-    <input formControlName="password" type="password" placeholder="Password" class="input-field" />
-    <button type="submit" class="submit-btn">Register</button>
-    <p class="switch-form">¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></p>
-  </form>
-</div>
+<body>
+  <div class="wrapper">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <h2>Registrarse</h2>
+      
+      <!-- Username Field -->
+      <div class="input-field" [class.invalid]="registerForm.controls['username'].invalid && registerForm.controls['username'].touched">
+        <input type="text" formControlName="username" required />
+        <label>Nombre de Usuario</label>
+        <div *ngIf="registerForm.controls['username'].invalid && registerForm.controls['username'].touched" class="error">
+          <small *ngIf="registerForm.controls['username'].hasError('required')">El nombre de usuario es obligatorio</small>
+        </div>
+      </div>
+
+      <!-- Email Field -->
+      <div class="input-field" [class.invalid]="registerForm.controls['email'].invalid && registerForm.controls['email'].touched">
+        <input type="text" formControlName="email" required />
+        <label>Correo electronico</label>
+        <div *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched" class="error">
+          <small *ngIf="registerForm.controls['email'].hasError('required')">El correo electronico es obligatorio</small>
+          <small *ngIf="registerForm.controls['email'].hasError('email')">Ingrese un correo valido</small>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="input-field" [class.invalid]="registerForm.controls['password'].invalid && registerForm.controls['password'].touched">
+        <input type="password" formControlName="password" required />
+        <label>Contraseña</label>
+        <div *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched" class="error">
+          <small *ngIf="registerForm.controls['password'].hasError('required')">La contraseña es obligatoria</small>
+          <small *ngIf="registerForm.controls['password'].hasError('minlength')">La contraseña debe de ser de al menos 6 digitos</small>
+        </div>
+      </div>
+
+      <!-- Register Button -->
+      <button type="submit" [disabled]="registerForm.invalid">Registrarse</button>
+
+      <!-- Link to Login -->
+      <div class="register">
+        <p>¿Ya tienes una cuenta? <a routerLink="/login">Login</a></p>
+      </div>
+    </form>
+  </div>
+</body>
+
+
+
+
+<!-- revisar, si no tocas los campos antes de darle a registrar, no sale cuales son los que no rellenaste -->

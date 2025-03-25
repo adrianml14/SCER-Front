@@ -17,13 +17,16 @@ export class RegisterComponent {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]] 
     });
   }
 
   onSubmit() {
     if (this.registerForm.valid) {
       console.log('Register Data:', this.registerForm.value);
+      alert('exitoso');
+    } else {
+      console.log('Formulario inválido');
     }
   }
 }
