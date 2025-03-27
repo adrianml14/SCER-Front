@@ -1,0 +1,89 @@
+mat-toolbar {
+  display: flex;
+  justify-content: space-between; /* Distribuye los elementos uniformemente */
+  align-items: center;
+  padding: 0 16px;
+}
+
+.navbar-option {
+ margin-left: 2%;
+}
+
+.example-icon {
+  flex-shrink: 0; /* Evita que se reduzca el tamaño */
+}
+
+.example-spacer {
+  flex-grow: 1; /* Empuja el botón derecho hacia el extremo */
+}
+
+@media (max-width: 768px) {
+    mat-toolbar {
+      padding: 0 4px; /* Reducir aún más el padding */
+      height: 48px; /* Disminuir la altura */
+    }
+  
+    .navbar-option {
+      gap: 5px; /* Reducir más el espacio entre botones */
+    }
+  
+    .navbar-option button {
+      font-size: 12px; /* Texto más pequeño */
+      padding: 2px 6px; /* Botones más compactos */
+      min-width: 60px; /* Reducir ancho mínimo */
+      height: 32px; /* Reducir altura */
+    }
+  
+    .example-icon mat-icon {
+      font-size: 18px; /* Iconos más pequeños */
+    }
+  
+    .example-icon {
+      width: 36px; /* Botones más pequeños */
+      height: 36px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    mat-toolbar {
+      flex-direction: column; /* Coloca los elementos en columna */
+      height: auto; /* Ajusta la altura automáticamente */
+      padding: 4px; /* Reduce el padding */
+    }
+  
+    .navbar-option {
+      width: 100%; /* Los botones ocupan todo el ancho */
+      display: flex;
+      justify-content: space-between; /* Distribuye los botones uniformemente */
+      margin-bottom: 8px; /* Espacio entre los botones y los iconos */
+    }
+  
+    .navbar-option mat-button-toggle {
+      flex: 1; /* Cada botón ocupa un espacio igual */
+      text-align: center;
+      font-size: 10px; /* Texto más pequeño */
+      padding: 2px 0; /* Reducir padding vertical */
+      height: 30px; /* Menos altura */
+    }
+  
+    /* Mover el icono a debajo de los botones */
+    .example-icon, .favorite-icon {
+      margin-top: 8px; /* Separación con el grupo de botones */
+      width: 36px; /* Tamaño más pequeño */
+      height: 36px;
+    }
+  
+    .example-icon mat-icon, .favorite-icon mat-icon {
+      font-size: 18px; /* Tamaño del icono ajustado */
+      flex-direction: column;
+    }
+  
+    /* Asegurarse que los iconos se muevan debajo de los botones sin que se superpongan */
+    .example-icon {
+      order: 2; /* Mueve este ícono debajo de los botones */
+    }
+  
+    .favorite-icon {
+      order: 3; /* Mueve este ícono debajo del otro ícono */
+    }
+  }
