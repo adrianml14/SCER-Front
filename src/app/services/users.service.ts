@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { User } from './models/User'; // Importamos la interfaz
+import { User } from '../models/User'; // Importamos la interfaz
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://127.0.0.1:8000/'; // URL de tu backend, asegúrate de que termine con '/'
+  private apiUrl = 'http://localhost:8000/api/'; // URL de tu backend, asegúrate de que termine con '/'
 
   constructor(private http: HttpClient) {}
 
