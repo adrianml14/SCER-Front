@@ -1,14 +1,11 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
+import { provideHttpClient } from '@angular/common/http'; // 👈 IMPORTA ESTO
 import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
 
-// Importamos el módulo HttpClientModule
-import { HttpClientModule } from '@angular/common/http'; 
-
-// Configuración de la aplicación
 bootstrapApplication(AppComponent, {
   providers: [
-    HttpClientModule,  // Asegúrate de importar HttpClientModule
-    ...appConfig.providers,  // Asegúrate de incluir los proveedores de appConfig
-  ]
+    provideHttpClient(), // ✅ ESTA ES LA CLAVE
+    ...appConfig.providers,
+  ],
 }).catch((err) => console.error(err));
