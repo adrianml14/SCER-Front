@@ -1,33 +1,42 @@
 <mat-tab-group animationDuration="500ms">
-
   <mat-tab label="Pilotos">
     <div class="grid-container">
-      <div *ngFor="let piloto of pilotos" class="card">
+      <div *ngFor="let piloto of pilotos" class="card" (click)="abrirPopup('piloto', piloto)">
         <img [src]="piloto.bandera" alt="bandera" width="30" />
         <p><strong>{{ piloto.nombre }}</strong></p>
-        <p>Precio: {{ piloto.precio | currency }}</p>
+        <p>{{ piloto.precio | currency }}</p>
       </div>
     </div>
   </mat-tab>
 
   <mat-tab label="Copilotos">
     <div class="grid-container">
-      <div *ngFor="let copiloto of copilotos" class="card">
+      <div *ngFor="let copiloto of copilotos" class="card" (click)="abrirPopup('copiloto', copiloto)">
         <img [src]="copiloto.bandera" alt="bandera" width="30" />
         <p><strong>{{ copiloto.nombre }}</strong></p>
-        <p>Precio: {{ copiloto.precio | currency }}</p>
+        <p>{{ copiloto.precio | currency }}</p>
       </div>
     </div>
   </mat-tab>
 
   <mat-tab label="Coches">
     <div class="grid-container">
-      <div *ngFor="let coche of coches" class="card">
+      <div *ngFor="let coche of coches" class="card" (click)="abrirPopup('coche', coche)">
         <img [src]="coche.imagen" alt="coche" width="100" />
         <p><strong>{{ coche.modelo }}</strong></p>
-        <p>Precio: {{ coche.precio | currency }}</p>
+        <p>{{ coche.precio | currency }}</p>
       </div>
     </div>
   </mat-tab>
-
 </mat-tab-group>
+
+<!-- Modal flotante -->
+<div class="overlay" *ngIf="elementoSeleccionado" (click)="cerrarPopup()">
+  <div class="popup" (click)="$event.stopPropagation()">
+    <img [src]="elementoSeleccionado.bandera || elementoSeleccionado.imagen" width="60" />
+    <p><strong>{{ elementoSeleccionado.nombre || elementoSeleccionado.modelo }}</strong></p>
+    <p>{{ elementoSeleccionado.precio | currency }}</p>
+    <button *ngIf="tipoSeleccionado === 'coche'" (click)="comprar()">Comprar</button>
+    <button *ngIf="tipoSeleccionado !== 'coche'" (click)="contratar()">Contratar</button>
+  </div>
+</div>

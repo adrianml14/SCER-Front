@@ -14,11 +14,56 @@
     padding: 16px;
     text-align: center;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-    background-color: white;
+    background-color: #B0E4E6;
+    cursor: pointer;
     transition: transform 0.2s ease;
   }
   
   .card:hover {
     transform: scale(1.03);
+    cursor: pointer;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Oscurece el fondo */
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .popup {
+    background-color: #B0E4E6;
+    padding: 24px;
+    border-radius: 12px;
+    min-width: 250px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  button {
+    background: #CB7CF8;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 10px 24px;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    background: #ad66d6;
   }
   
