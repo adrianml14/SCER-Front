@@ -1,20 +1,33 @@
-<h2>Pilotos</h2>
-<div *ngFor="let piloto of pilotos" class="card">
-  <img [src]="piloto.bandera" alt="bandera" width="30" />
-  <p><strong>{{ piloto.nombre }}</strong></p>
-  <p>Precio: {{ piloto.precio | currency }}</p>
-</div>
+<mat-tab-group animationDuration="500ms">
 
-<h2>Copilotos</h2>
-<div *ngFor="let copiloto of copilotos" class="card">
-  <img [src]="copiloto.bandera" alt="bandera" width="30" />
-  <p><strong>{{ copiloto.nombre }}</strong></p>
-  <p>Precio: {{ copiloto.precio | currency }}</p>
-</div>
+  <mat-tab label="Pilotos">
+    <div class="grid-container">
+      <div *ngFor="let piloto of pilotos" class="card">
+        <img [src]="piloto.bandera" alt="bandera" width="30" />
+        <p><strong>{{ piloto.nombre }}</strong></p>
+        <p>Precio: {{ piloto.precio | currency }}</p>
+      </div>
+    </div>
+  </mat-tab>
 
-<h2>Coches</h2>
-<div *ngFor="let coche of coches" class="card">
-  <img [src]="coche.imagen" alt="coche" width="100" />
-  <p><strong>{{ coche.modelo }}</strong></p>
-  <p>Precio: {{ coche.precio | currency }}</p>
-</div>
+  <mat-tab label="Copilotos">
+    <div class="grid-container">
+      <div *ngFor="let copiloto of copilotos" class="card">
+        <img [src]="copiloto.bandera" alt="bandera" width="30" />
+        <p><strong>{{ copiloto.nombre }}</strong></p>
+        <p>Precio: {{ copiloto.precio | currency }}</p>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Coches">
+    <div class="grid-container">
+      <div *ngFor="let coche of coches" class="card">
+        <img [src]="coche.imagen" alt="coche" width="100" />
+        <p><strong>{{ coche.modelo }}</strong></p>
+        <p>Precio: {{ coche.precio | currency }}</p>
+      </div>
+    </div>
+  </mat-tab>
+
+</mat-tab-group>

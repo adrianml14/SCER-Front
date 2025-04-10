@@ -1,0 +1,11 @@
+.auth-background {
+    background: url("/images/FondoLR.jpeg") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+  }
+  
+  .main-background {
+    background-color: #303030;
+    color: white;
+    min-height: 100vh;
+  }

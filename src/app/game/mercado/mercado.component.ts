@@ -2,11 +2,12 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RallyService } from '../../services/rally.service';
 import { HttpClientModule } from '@angular/common/http';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-mercado',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, MatTabsModule],
   templateUrl: './mercado.component.html',
   styleUrl: './mercado.component.css',
 })
