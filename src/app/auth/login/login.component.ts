@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, HttpClientModule], 
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, HttpClientModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -34,9 +34,10 @@ export class LoginComponent {
       formData.set('password', password);
 
       // Hacemos la solicitud POST al backend con los datos como URLSearchParams
-      this.http.post('http://127.0.0.1:8000/login/', formData.toString(), {
+      this.http.post('http://127.0.0.1:8000/api/users/login/', formData.toString(), {
         headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }), // Configuramos el tipo de contenido
-        responseType: 'text' // Esperamos una respuesta de tipo texto
+        responseType: 'text', // Esperamos una respuesta de tipo texto
+        withCredentials: true // Permitir el envío de cookies o credenciales
       })
       .subscribe({
         next: (response) => {

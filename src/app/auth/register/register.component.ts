@@ -33,7 +33,7 @@ export class RegisterComponent {
       formData.set('password', this.registerForm.value.password);
 
       // Hacemos la solicitud POST al backend con los datos como URLSearchParams
-      this.http.post('http://127.0.0.1:8000/register/', formData.toString(), {
+      this.http.post('http://127.0.0.1:8000/api/users/register/', formData.toString(), {
         headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }), // Indicamos el tipo de contenido
         responseType: 'text' // Le indicamos que esperamos una respuesta de tipo texto
       })
