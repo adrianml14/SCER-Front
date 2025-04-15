@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -12,15 +12,28 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  errorMessage: string = ''; // Mensaje de error si ocurre uno
+  errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
-    // Definir la estructura del formulario
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]], 
       password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
+
+  ngOnInit(): void {
+    // Obtener CSRF cookie al cargar el componente
+    this.http.get('http://127.0.0.1:8000/api/users/csrf/', {
+      withCredentials: true
+    }).subscribe({
+      next: () => console.log('✅ CSRF cookie establecida correctamente.'),
+      error: err => console.error('❌ Error al obtener CSRF cookie:', err)
     });
   }
 
@@ -28,29 +41,28 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
 
-      // Creamos los parámetros de la URL para enviar como x-www-form-urlencoded
       const formData = new URLSearchParams();
       formData.set('email', email);
       formData.set('password', password);
 
-      // Hacemos la solicitud POST al backend con los datos como URLSearchParams
       this.http.post('http://127.0.0.1:8000/api/users/login/', formData.toString(), {
-        headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }), // Configuramos el tipo de contenido
-        responseType: 'text', // Esperamos una respuesta de tipo texto
-        withCredentials: true // Permitir el envío de cookies o credenciales
-      })
-      .subscribe({
+        headers: new HttpHeaders({
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }),
+        withCredentials: true,
+        responseType: 'text'
+      }).subscribe({
         next: (response) => {
           if (response === 'Login exitoso') {
-            console.log('Login exitoso:', response);
+            console.log('✅ Login exitoso');
             alert('Login exitoso');
-            this.router.navigate(['/game']); // Redirigir al juego o a otra página
+            this.router.navigate(['/game']);
           } else {
-            this.errorMessage = response; // Mostrar el mensaje de error
+            this.errorMessage = response;
           }
         },
         error: (err) => {
-          console.error('Error en el login:', err);
+          console.error('❌ Error en el login:', err);
           this.errorMessage = err.error || 'Error desconocido';
         }
       });
