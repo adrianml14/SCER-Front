@@ -3,7 +3,6 @@ import { inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-// Esta es la función de interceptor que será usada directamente en el `main.ts`
 export const csrfInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> => {
   const csrfToken = getCookie('csrftoken');
   if (csrfToken) {

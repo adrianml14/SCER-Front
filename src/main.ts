@@ -7,7 +7,7 @@ import { csrfInterceptor } from './app/auth/csrf.interceptor';
 bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(
-      withInterceptors([csrfInterceptor])  // Aquí simplemente pasas la clase del interceptor
+      withInterceptors([csrfInterceptor])
     ),
     ...appConfig.providers
   ],

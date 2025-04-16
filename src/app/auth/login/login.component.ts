@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]], 
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
@@ -37,22 +37,35 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  getCookie(name: string): string | null {
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+      const [key, value] = cookie.trim().split('=');
+      if (key === name) {
+        return decodeURIComponent(value);
+      }
+    }
+    return null;
+  }
+
   onSubmit() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
+      const csrfToken = this.getCookie('csrftoken'); // Obtenemos el token de la cookie
 
-      const formData = new URLSearchParams();
-      formData.set('email', email);
-      formData.set('password', password);
-
-      this.http.post('http://127.0.0.1:8000/api/users/login/', formData.toString(), {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }),
-        withCredentials: true,
-        responseType: 'text'
-      }).subscribe({
-        next: (response) => {
+      this.http.post(
+        'http://127.0.0.1:8000/api/users/login/',
+        { email, password },
+        {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken || ''
+          }),
+          withCredentials: true,
+          responseType: 'text'
+        }
+      ).subscribe({
+        next: (response: string) => {
           if (response === 'Login exitoso') {
             console.log('✅ Login exitoso');
             alert('Login exitoso');
