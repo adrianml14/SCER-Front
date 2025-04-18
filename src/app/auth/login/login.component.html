@@ -3,21 +3,19 @@
 
     <button routerLink="/game/como-jugar" class="info-button">Cómo Jugar</button>
 
-
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <h2>Login</h2>
 
-      <!--email field-->
+      <!-- Username field -->
       <div class="input-field">
-        <input formControlName="email" type="email" required />
-        <label>Correo electronico</label>
-        <div *ngIf="loginForm.controls['email']?.invalid && loginForm.controls['email']?.touched" class="error">
-          <small *ngIf="loginForm.controls['email']?.hasError('required')">El correo electronico es obligatorio</small>
-          <small *ngIf="loginForm.controls['email']?.hasError('email')">Ingrese un correo valido</small>
+        <input formControlName="username" type="text" required />
+        <label>Nombre de usuario</label>
+        <div *ngIf="loginForm.controls['username']?.invalid && loginForm.controls['username']?.touched" class="error">
+          <small *ngIf="loginForm.controls['username']?.hasError('required')">El nombre de usuario es obligatorio</small>
         </div>
       </div>
 
-      <!--pasword field-->
+      <!-- Password field -->
       <div class="input-field">
         <input formControlName="password" type="password" required />
         <label>Contraseña</label>
@@ -26,15 +24,6 @@
           <small *ngIf="loginForm.controls['password']?.hasError('minlength')">La contraseña debe de ser de al menos 6 digitos</small>
         </div>
       </div>
-
-        <!--Futuro recuperar contraseña mandando una clave por gmail e ingresandola-->
-      <!-- <div class="forget">
-        <label for="remember">
-          <input formControlName="remember" type="checkbox" />
-          <p>Remember me</p>
-        </label>
-        <a href="#">Forgot password?</a>
-      </div> -->
 
       <button type="submit" [disabled]="loginForm.invalid">Log In</button>
 

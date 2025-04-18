@@ -26,16 +26,13 @@ export class RegisterComponent {
   onSubmit() {
     if (this.registerForm.valid) {
       console.log('Register Data:', this.registerForm.value);
-
-      const formData = new URLSearchParams(); // Creamos los parámetros de la URL
-      formData.set('name', this.registerForm.value.username);
-      formData.set('email', this.registerForm.value.email);
-      formData.set('password', this.registerForm.value.password);
-
-      // Hacemos la solicitud POST al backend con los datos como URLSearchParams
-      this.http.post('http://127.0.0.1:8000/api/users/register/', formData.toString(), {
-        headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }), // Indicamos el tipo de contenido
-        responseType: 'text' // Le indicamos que esperamos una respuesta de tipo texto
+  
+      const formData = this.registerForm.value; // Directamente toma los datos del formulario
+  
+      // Hacemos la solicitud POST al backend con los datos como JSON
+      this.http.post('http://127.0.0.1:8000/api/users/register/', formData, {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' }), // Indicamos que los datos son JSON
+        responseType: 'text' // Esperamos una respuesta de tipo texto
       })
       .subscribe(
         (response) => {
