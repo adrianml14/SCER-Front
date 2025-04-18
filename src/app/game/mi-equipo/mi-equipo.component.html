@@ -1,1 +1,12 @@
-<p>mi-equipo works!</p>
+<div class="equipo-container">
+    <h2>Mi Equipo</h2>
+  
+    <div *ngIf="presupuesto !== null; else cargando">
+      <p><strong>Presupuesto disponible:</strong> {{ presupuesto | currency:'EUR' }}</p>
+    </div>
+  
+    <ng-template #cargando>
+      <p *ngIf="error">{{ error }}</p>
+      <p *ngIf="!error">Cargando presupuesto...</p>
+    </ng-template>
+  </div>

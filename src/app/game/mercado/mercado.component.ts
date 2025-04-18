@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 
-
 @Component({
   selector: 'app-mercado',
   standalone: true,
@@ -39,13 +38,24 @@ export class MercadoComponent implements OnInit {
     this.tipoSeleccionado = null;
   }
 
-  contratar() {
-    console.log('Contratando:', this.elementoSeleccionado);
-    this.cerrarPopup();
+  comprar() {
+    if (this.elementoSeleccionado && this.tipoSeleccionado) {
+      this.rallyService.comprarElemento(this.tipoSeleccionado, this.elementoSeleccionado.id).subscribe({
+        next: (data) => {
+          console.log(data.mensaje);
+          alert(data.mensaje);  // Muestra un mensaje de éxito
+          this.cerrarPopup();
+        },
+        error: (err) => {
+          console.error('Error al comprar:', err);
+          alert('No se pudo realizar la compra.');
+        }
+      });
+    }
   }
 
-  comprar() {
-    console.log('Comprando:', this.elementoSeleccionado);
+  contratar() {
+    console.log('Contratando:', this.elementoSeleccionado);
     this.cerrarPopup();
   }
 }
