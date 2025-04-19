@@ -37,6 +37,6 @@
     <p><strong>{{ elementoSeleccionado.nombre || elementoSeleccionado.modelo }}</strong></p>
     <p>{{ elementoSeleccionado.precio | currency }}</p>
     <button *ngIf="tipoSeleccionado === 'coche'" (click)="comprar()">Comprar</button>
-    <button *ngIf="tipoSeleccionado !== 'coche'" (click)="contratar()">Contratar</button>
+    <button *ngIf="tipoSeleccionado !== 'coche'" (click)="comprar()">Contratar</button>
   </div>
 </div>

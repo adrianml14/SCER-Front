@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { User } from '../models/User'; // Importamos la interfaz
@@ -26,6 +26,21 @@ export class UserService {
     );
   }
 
+  // Método para guardar el token en localStorage
+  saveToken(token: string): void {
+    localStorage.setItem('authToken', token);
+  }
+
+  // Método para obtener el token desde localStorage
+  getToken(): string | null {
+    return localStorage.getItem('authToken');
+  }
+
+  // Método para hacer logout
+  logout(): void {
+    localStorage.removeItem('authToken');
+  }
+
   // Manejo de errores en las peticiones HTTP
   private handleError(error: HttpErrorResponse) {
     let errorMessage = '';
@@ -37,5 +52,13 @@ export class UserService {
       errorMessage = `Código de error: ${error.status}, Mensaje: ${error.message}`;
     }
     return throwError(() => new Error(errorMessage));
+  }
+
+  // Método para obtener los encabezados con el token
+  getAuthHeaders(): HttpHeaders {
+    const token = this.getToken();
+    return new HttpHeaders({
+      'Authorization': token ? `Token ${token}` : ''
+    });
   }
 }

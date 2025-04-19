@@ -1,14 +1,13 @@
+import { CommonModule } from '@angular/common';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, ReactiveFormsModule], // Asegúrate de incluir CommonModule aquí
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -80,7 +79,7 @@ export class LoginComponent implements OnInit {
         {
           headers,
           withCredentials: true,
-          responseType: 'json'  // Aquí corregimos para que espere un JSON
+          responseType: 'json'
         }
       ).subscribe({
         next: (response: any) => {

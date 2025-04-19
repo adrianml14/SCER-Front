@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -26,37 +26,23 @@ export class RallyService {
     return this.http.get(`${this.apiUrl}/coches/`);
   }
 
-  // Obtener presupuesto del equipo fantasy
-  getPresupuesto(): Observable<any> {
-    this.logSessionCookie();
-    return this.http.get(`${this.apiUrl}/presupuesto/`, { withCredentials: true });
+  // Obtener presupuesto del equipo fantasy (con token en encabezados)
+  getPresupuesto(token: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${token}`, // Autenticación usando el token
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.get<any>(`${this.apiUrl}/presupuesto/`, { headers });
   }
 
   // Función para comprar un elemento (piloto, copiloto o coche)
-  comprarElemento(tipoSeleccionado: string, id: any): Observable<any> {
-    // Hacer una petición POST al backend para comprar el elemento
-    return this.http.post<any>(`${this.apiUrl}/${tipoSeleccionado}/${id}/comprar/`, {}, { withCredentials: true });
-  }
-
-  // Función para obtener la cookie de la sesión
-  getSessionCookie(name: string): string | null {
-    const cookies = document.cookie.split(';');
-    for (let cookie of cookies) {
-      const [key, value] = cookie.trim().split('=');
-      if (key === name) {
-        return decodeURIComponent(value);
-      }
-    }
-    return null;
-  }
-
-  // Verificar la cookie de sesión
-  logSessionCookie() {
-    const sessionCookie = this.getSessionCookie('sessionid');  // Usualmente Django usa 'sessionid' como nombre de la cookie
-    if (sessionCookie) {
-      console.log('Cookie de sesión:', sessionCookie);
-    } else {
-      console.log('No se encontró la cookie de sesión');
-    }
+  comprarElemento(tipo: string, id: number, token: string): Observable<any> {
+    const url = `${this.apiUrl}/comprar/${tipo}/${id}/`;
+    const headers = new HttpHeaders({
+      'Authorization': `Token ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.post(url, {}, { headers });
   }
 }

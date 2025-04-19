@@ -7,6 +7,6 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'game', loadChildren: () => import('./game/game.module').then(m => m.GameModule) },
   { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule) },
-  { path: '', redirectTo: '/game/como-jugar', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: '/game/como-jugar' },
 ];

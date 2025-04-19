@@ -53,9 +53,4 @@ export class MercadoComponent implements OnInit {
       });
     }
   }
-
-  contratar() {
-    console.log('Contratando:', this.elementoSeleccionado);
-    this.cerrarPopup();
-  }
 }
