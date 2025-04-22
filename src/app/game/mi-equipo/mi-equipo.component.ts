@@ -16,12 +16,19 @@ export class MiEquipoComponent implements OnInit {
   constructor(private equipoService: RallyService) {}
 
   ngOnInit(): void {
+    fetch('http://127.0.0.1:8000/api/rally/presupuesto/', {
+      method: 'GET',
+      credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(data => console.log('✅ Presupuesto desde fetch:', data))
+    .catch(err => console.error('❌ Error en fetch:', err));
     // Obtener el token del localStorage
     const token = localStorage.getItem('token');
 
     if (token) {
       // Hacer la petición para obtener el presupuesto
-      this.equipoService.getPresupuesto(token).subscribe({
+      this.equipoService.getPresupuesto().subscribe({
         next: (data) => {
           this.presupuesto = data.presupuesto;
         },

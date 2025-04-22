@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,42 +7,32 @@ import { Observable } from 'rxjs';
 })
 export class RallyService {
 
-  private apiUrl = 'http://127.0.0.1:8000/api/rally'; // Asegúrate de que esta URL sea correcta para tu backend
+  private apiUrl = 'http://127.0.0.1:8000/api/rally'; // Ajusta según tu configuración
 
   constructor(private http: HttpClient) {}
 
   // Obtener lista de pilotos
   getPilotos(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/pilotos/`);
+    return this.http.get(`${this.apiUrl}/pilotos/`, { withCredentials: true });
   }
 
   // Obtener lista de copilotos
   getCopilotos(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/copilotos/`);
+    return this.http.get(`${this.apiUrl}/copilotos/`, { withCredentials: true });
   }
 
   // Obtener lista de coches
   getCoches(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/coches/`);
+    return this.http.get(`${this.apiUrl}/coches/`, { withCredentials: true });
   }
 
-  // Obtener presupuesto del equipo fantasy (con token en encabezados)
-  getPresupuesto(token: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${token}`, // Autenticación usando el token
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.get<any>(`${this.apiUrl}/presupuesto/`, { headers });
+  // Obtener presupuesto del equipo fantasy
+  getPresupuesto(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/presupuesto/`, { withCredentials: true });
   }
-
-  // Función para comprar un elemento (piloto, copiloto o coche)
-  comprarElemento(tipo: string, id: number, token: string): Observable<any> {
+  
+  comprarElemento(tipo: string, id: number): Observable<any> {
     const url = `${this.apiUrl}/comprar/${tipo}/${id}/`;
-    const headers = new HttpHeaders({
-      'Authorization': `Token ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.post(url, {}, { headers });
+    return this.http.post(url, {}, { withCredentials: true });
   }
-}
+} 
