@@ -35,4 +35,21 @@ export class RallyService {
     const url = `${this.apiUrl}/comprar/${tipo}/${id}/`;
     return this.http.post(url, {}, { withCredentials: true });
   }
+
+  venderElemento(tipo: 'piloto' | 'copiloto' | 'coche', id: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/vender/${tipo}/${id}/`, {});
+  }
+
+  //obtener mi equipo
+  getMisPilotos() {
+    return this.http.get<any[]>('http://127.0.0.1:8000/api/rally/mis-pilotos/', { withCredentials: true });
+  }
+  
+  getMisCopilotos() {
+    return this.http.get<any[]>('http://127.0.0.1:8000/api/rally/mis-copilotos/', { withCredentials: true });
+  }
+  
+  getMisCoches() {
+    return this.http.get<any[]>('http://127.0.0.1:8000/api/rally/mis-coches/', { withCredentials: true });
+  }
 } 

@@ -43,7 +43,21 @@ export class MercadoComponent implements OnInit {
       this.rallyService.comprarElemento(this.tipoSeleccionado, this.elementoSeleccionado.id).subscribe({
         next: (data) => {
           console.log(data.mensaje);
-          alert(data.mensaje);  // Muestra un mensaje de éxito
+          alert(data.mensaje);
+          
+                  
+        switch (this.tipoSeleccionado) {
+          case 'piloto':
+            this.rallyService.getPilotos().subscribe(data => this.pilotos = data);
+            break;
+          case 'copiloto':
+            this.rallyService.getCopilotos().subscribe(data => this.copilotos = data);
+            break;
+          case 'coche':
+            this.rallyService.getCoches().subscribe(data => this.coches = data);
+            break;
+        }
+
           this.cerrarPopup();
         },
         error: (err) => {

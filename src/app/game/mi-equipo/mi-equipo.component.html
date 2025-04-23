@@ -1,12 +1,60 @@
 <div class="equipo-container">
-    <h2>Mi Equipo</h2>
-  
-    <div *ngIf="presupuesto !== null; else cargando">
-      <p><strong>Presupuesto disponible:</strong> {{ presupuesto | currency:'EUR' }}</p>
+  <h2>Mi Equipo</h2>
+
+  <div *ngIf="presupuesto !== null; else cargando">
+    <p class="presupuesto"><strong>Presupuesto disponible:</strong> {{ presupuesto | currency:'EUR' }}</p>
+
+    <div class="grid-layout">
+      <!-- Columna Pilotos -->
+      <div class="column">
+        <h3>Pilotos</h3>
+        <div *ngFor="let piloto of pilotos" class="card" (click)="abrirPopup('piloto', piloto)">
+          <img [src]="piloto.bandera" width="30" />
+          <p><strong>{{ piloto.nombre }}</strong></p>
+          <p>{{ piloto.precio | currency }}</p>
+        </div>
+      </div>
+
+      <!-- Separador -->
+      <div class="vertical-divider"></div>
+
+      <!-- Columna Copilotos -->
+      <div class="column">
+        <h3>Copilotos</h3>
+        <div *ngFor="let copiloto of copilotos" class="card" (click)="abrirPopup('copiloto', copiloto)">
+          <img [src]="copiloto.bandera" width="30" />
+          <p><strong>{{ copiloto.nombre }}</strong></p>
+          <p>{{ copiloto.precio | currency }}</p>
+        </div>
+      </div>
+
+      <!-- Separador -->
+      <div class="vertical-divider"></div>
+
+      <!-- Columna Coches -->
+      <div class="column">
+        <h3>Coches</h3>
+        <div *ngFor="let coche of coches" class="card" (click)="abrirPopup('coche', coche)">
+          <img [src]="coche.imagen" width="100" />
+          <p><strong>{{ coche.modelo }}</strong></p>
+          <p>{{ coche.precio | currency }}</p>
+        </div>
+      </div>
     </div>
-  
-    <ng-template #cargando>
-      <p *ngIf="error">{{ error }}</p>
-      <p *ngIf="!error">Cargando presupuesto...</p>
-    </ng-template>
   </div>
+
+  <ng-template #cargando>
+    <p *ngIf="error">{{ error }}</p>
+    <p *ngIf="!error">Cargando equipo...</p>
+  </ng-template>
+</div>
+
+<!-- Modal flotante -->
+<div class="overlay" *ngIf="elementoSeleccionado" (click)="cerrarPopup()">
+  <div class="popup" (click)="$event.stopPropagation()">
+    <img [src]="elementoSeleccionado.bandera || elementoSeleccionado.imagen" width="60" />
+    <p><strong>{{ elementoSeleccionado.nombre || elementoSeleccionado.modelo }}</strong></p>
+    <p>{{ elementoSeleccionado.precio | currency }}</p>
+    <button (click)="vender()">Vender</button>
+  </div>
+</div>
