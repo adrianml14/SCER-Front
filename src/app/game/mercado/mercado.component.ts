@@ -14,6 +14,8 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class MercadoComponent implements OnInit {
   private rallyService = inject(RallyService);
+  presupuesto: number | null = null;
+
 
   pilotos: any[] = [];
   copilotos: any[] = [];
@@ -23,9 +25,15 @@ export class MercadoComponent implements OnInit {
   tipoSeleccionado: 'piloto' | 'copiloto' | 'coche' | null = null;
 
   ngOnInit(): void {
-    this.rallyService.getPilotos().subscribe(data => this.pilotos = data);
-    this.rallyService.getCopilotos().subscribe(data => this.copilotos = data);
-    this.rallyService.getCoches().subscribe(data => this.coches = data);
+    this.cargarMercadoFiltrado();
+    this.cargarPresupuesto();
+  }
+
+  cargarPresupuesto() {
+    this.rallyService.getPresupuesto().subscribe({
+      next: data => this.presupuesto = data.presupuesto,
+      error: err => console.error('Error al cargar presupuesto:', err)
+    });
   }
 
   abrirPopup(tipo: 'piloto' | 'copiloto' | 'coche', item: any) {
@@ -34,6 +42,7 @@ export class MercadoComponent implements OnInit {
   }
 
   cerrarPopup() {
+    this.cargarMercadoFiltrado();
     this.elementoSeleccionado = null;
     this.tipoSeleccionado = null;
   }
@@ -59,6 +68,7 @@ export class MercadoComponent implements OnInit {
         }
 
           this.cerrarPopup();
+          this.cargarPresupuesto();
         },
         error: (err) => {
           console.error('Error al comprar:', err);
@@ -67,4 +77,36 @@ export class MercadoComponent implements OnInit {
       });
     }
   }
+
+  cargarMercadoFiltrado() {
+    // Primero obtenemos los elementos del equipo del usuario
+    let misPilotosIds: number[] = [];
+    let misCopilotosIds: number[] = [];
+    let misCochesIds: number[] = [];
+  
+    this.rallyService.getMisPilotos().subscribe(misPilotos => {
+      misPilotosIds = misPilotos.map((p: any) => p.id);
+  
+      this.rallyService.getPilotos().subscribe(pilotos => {
+        this.pilotos = pilotos.filter((p: any) => !misPilotosIds.includes(p.id));
+      });
+    });
+  
+    this.rallyService.getMisCopilotos().subscribe(misCopilotos => {
+      misCopilotosIds = misCopilotos.map((c: any) => c.id);
+  
+      this.rallyService.getCopilotos().subscribe(copilotos => {
+        this.copilotos = copilotos.filter((c: any) => !misCopilotosIds.includes(c.id));
+      });
+    });
+  
+    this.rallyService.getMisCoches().subscribe(misCoches => {
+      misCochesIds = misCoches.map((c: any) => c.id);
+  
+      this.rallyService.getCoches().subscribe(coches => {
+        this.coches = coches.filter((c: any) => !misCochesIds.includes(c.id));
+      });
+    });
+  }
+
 }
