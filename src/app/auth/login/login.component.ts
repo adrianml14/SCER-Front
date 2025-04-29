@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-login',
@@ -46,7 +47,6 @@ export class LoginComponent implements OnInit {
     for (let cookie of cookies) {
       const [key, value] = cookie.trim().split('=');
       if (key === name) {
-        console.log(`Cookie encontrada: ${key} = ${value}`);
         return decodeURIComponent(value);
       }
     }
@@ -86,8 +86,14 @@ export class LoginComponent implements OnInit {
           console.log('Respuesta del servidor:', response);
           if (response && response.message === 'Login exitoso') {
             console.log('✅ Login exitoso');
-            alert('Login exitoso');
-            this.router.navigate(['/game/mi-equipo']);
+            Swal.fire({
+              title: "Login correcto",
+              icon: "success",
+              draggable: true
+            });
+            setTimeout(() => {
+              this.router.navigate(['/game/mi-equipo']);
+            }, 2000);
           } else {
             console.log('Error en la respuesta del servidor:', response.message);
             this.errorMessage = response.message || 'Error desconocido';

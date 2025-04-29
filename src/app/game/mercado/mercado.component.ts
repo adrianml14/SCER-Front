@@ -4,6 +4,7 @@ import { RallyService } from '../../services/rally.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-mercado',
@@ -51,8 +52,11 @@ export class MercadoComponent implements OnInit {
     if (this.elementoSeleccionado && this.tipoSeleccionado) {
       this.rallyService.comprarElemento(this.tipoSeleccionado, this.elementoSeleccionado.id).subscribe({
         next: (data) => {
-          console.log(data.mensaje);
-          alert(data.mensaje);
+          Swal.fire({
+            title: data.mensaje,
+            icon: "success",
+            draggable: true
+          });
           
                   
         switch (this.tipoSeleccionado) {
