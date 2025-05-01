@@ -37,7 +37,8 @@ export class RallyService {
   }
 
   venderElemento(tipo: 'piloto' | 'copiloto' | 'coche', id: number): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/vender/${tipo}/${id}/`, {});
+    return this.http.post<any>(`${this.apiUrl}/vender/${tipo}/${id}/`, {}, { withCredentials: true } ) ;
+    
   }
 
   //obtener mi equipo

@@ -37,4 +37,11 @@ export class UserService {
     }
     return throwError(() => new Error(errorMessage));
   }
+
+  getPerfil() {
+    return this.http.get<any>(`${this.apiUrl}users/me`, {
+      withCredentials: true
+    });
+  }
+  
 }

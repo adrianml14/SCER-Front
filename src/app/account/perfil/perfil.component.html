@@ -1,1 +1,14 @@
-<p>perfil works!</p>
+<div class="perfil-container" *ngIf="usuario; else cargando">
+    <div class="perfil-card">
+      <h2>Mi Perfil</h2>
+      <p><strong>Nombre de usuario:</strong> {{ usuario.username }}</p>
+      <p><strong>Correo electrónico:</strong> {{ usuario.email }}</p>
+    </div>
+  </div>
+  
+  <ng-template #cargando>
+    <div class="perfil-container">
+      <p>Cargando perfil...</p>
+    </div>
+  </ng-template>
+  
