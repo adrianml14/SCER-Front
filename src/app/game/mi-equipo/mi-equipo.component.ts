@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RallyService } from '../../services/rally.service';
 import { HttpHeaders } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-mi-equipo',
@@ -89,6 +90,12 @@ export class MiEquipoComponent implements OnInit {
 
     this.equipoService.venderElemento(tipo, idElemento).subscribe({
       next: (data) => {
+
+        Swal.fire({
+          title: data.mensaje || 'Elemento vendido exitosamente',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
         // Actualizar presupuesto localmente
         if (this.presupuesto !== null) {
           this.presupuesto += Number(this.elementoSeleccionado.precio);

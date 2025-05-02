@@ -2,13 +2,13 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("ngOnInit llamado");
+    document.body.classList.add('auth-background');
     this.http.get('http://127.0.0.1:8000/api/users/csrf/', {
       withCredentials: true
     }).subscribe({
@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit {
   }
 
   getCookie(name: string): string | null {
-    console.log(`Buscando cookie: ${name}`);
     const cookies = document.cookie.split(';');
     for (let cookie of cookies) {
       const [key, value] = cookie.trim().split('=');

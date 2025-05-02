@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';  // Importa HttpClient para las peticiones HTTP
-import { Router } from '@angular/router';  // Para redirigir después de un registro exitoso
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';  // Para redirigir después de un regi
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
   registerForm: FormGroup;
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
@@ -21,6 +21,9 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+  }
+  ngOnInit(): void {
+    document.body.classList.add('auth-background');
   }
 
   onSubmit() {
