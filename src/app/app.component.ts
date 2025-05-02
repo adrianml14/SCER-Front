@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { RouterOutlet, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { ToolbarComponent } from './game/toolbar/toolbar.component';
 import { CommonModule } from '@angular/common';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +11,26 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'SCER-Front';
   showToolbar = true;
 
-  constructor(private router: Router) {
-    this.router.events.subscribe(() => {
-      this.showToolbar = !this.router.url.startsWith('/login') && !this.router.url.startsWith('/register');
-    });
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        const isAuthRoute = event.urlAfterRedirects.startsWith('/login') || event.urlAfterRedirects.startsWith('/register');
+
+        this.showToolbar = !isAuthRoute;
+
+        if (isAuthRoute) {
+          document.body.classList.add('auth-background');
+        } else {
+          document.body.classList.remove('auth-background');
+          
+        }
+      });
   }
 }
