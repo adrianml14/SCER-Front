@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule], // Asegúrate de incluir CommonModule aquí
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })

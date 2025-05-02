@@ -5,14 +5,15 @@ import { HttpClient } from '@angular/common/http';
 
 export const csrfInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> => {
   const csrfToken = getCookie('csrftoken');
-  if (csrfToken) {
+
+  if (csrfToken && req.method !== 'GET') {
     const cloned = req.clone({
       headers: req.headers.set('X-CSRFToken', csrfToken),
       withCredentials: true
     });
     return next(cloned);
   }
-  return next(req);
+  return next(req.clone({ withCredentials: true }));
 };
 
 function getCookie(name: string): string | null {
