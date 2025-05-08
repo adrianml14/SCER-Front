@@ -53,4 +53,15 @@ export class RallyService {
   getMisCoches() {
     return this.http.get<any[]>('http://127.0.0.1:8000/api/rally/mis-coches/', { withCredentials: true });
   }
+
+  // nombre del equipo fantasy
+  getNombreEquipo(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/nombre-equipo/`, { withCredentials: true });
+  }
+
+  cambiarNombreEquipo(nuevoNombre: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/cambiar-nombre-equipo/`, { nombre_equipo: nuevoNombre }, { withCredentials: true });
+  }
+  
+  
 } 

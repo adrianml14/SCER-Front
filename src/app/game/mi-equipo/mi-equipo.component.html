@@ -1,5 +1,5 @@
 <div class="equipo-container">
-  <h2>Mi Equipo</h2>
+  <h2>{{ nombreEquipo }}</h2>
 
   <div *ngIf="presupuesto !== null; else cargando">
     <p class="presupuesto"><strong>Presupuesto disponible:</strong> {{ presupuesto | currency:'EUR' }}</p>

@@ -2,6 +2,9 @@
     <div class="perfil-card">
       <p><strong>Nombre de usuario:</strong> {{ usuario.username }}</p>
       <p><strong>Correo electrónico:</strong> {{ usuario.email }}</p>
+      <p><strong>Nombre del equipo:</strong></p>
+        <input [(ngModel)]="nuevoNombreEquipo" placeholder="Nuevo nombre del equipo" />
+        <button (click)="cambiarNombreEquipo()">Guardar nombre</button>
     </div>
   </div>
   
