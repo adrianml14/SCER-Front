@@ -1,1 +1,30 @@
-<p>ligas works!</p>
+<div class="liga-container">
+  
+  <!-- Formulario para crear nueva liga -->
+  <div>
+    <input type="text" [(ngModel)]="nombreNuevaLiga" placeholder="Nombre de la nueva liga" />
+    <button (click)="crearLiga()">Crear Liga</button>
+  </div>
+
+  <div *ngIf="misLigas.length > 0">
+    <h2>Mis Ligas</h2>
+    <ul>
+      <li *ngFor="let liga of misLigas" (click)="ligaSeleccionada = liga.id">
+        {{ liga.nombre }} - <button (click)="obtenerParticipantes()">Ver Participantes</button>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="ligaSeleccionada">
+    <h3>Participantes</h3>
+    <ul>
+      <li *ngFor="let participante of participantes">
+        {{ participante.username }}
+        <button (click)="eliminarParticipante(participante.username)">Eliminar</button>
+      </li>
+    </ul>
+
+    <input type="text" [(ngModel)]="nuevoParticipanteUsername" placeholder="Nombre de usuario" />
+    <button (click)="agregarParticipante()">Agregar Participante</button>
+  </div>
+</div>
