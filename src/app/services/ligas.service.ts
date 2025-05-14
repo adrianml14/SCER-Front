@@ -46,4 +46,9 @@ export class LigasService {
       withCredentials: true
     });
   }
+  
+  obtenerTodasLigas() {
+    return this.http.get<any[]>(this.baseUrl);
+  }
+
 }

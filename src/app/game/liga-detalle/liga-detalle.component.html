@@ -1,0 +1,9 @@
+<div class="liga-detalle">
+  <h2>Clasificación de la Liga</h2>
+  <ul>
+    <li *ngFor="let participante of participantes">
+      {{ participante.nombre }} - {{ participante.puntos }} puntos
+    </li>
+  </ul>
+  <button (click)="volver()">Volver a las Ligas</button> <!-- Botón para volver -->
+</div>

@@ -1,30 +1,40 @@
 <div class="liga-container">
-  
-  <!-- Formulario para crear nueva liga -->
+  <!-- Crear nueva liga -->
   <div>
-    <input type="text" [(ngModel)]="nombreNuevaLiga" placeholder="Nombre de la nueva liga" />
-    <button (click)="crearLiga()">Crear Liga</button>
+    <button (click)="abrirPopupCrearLiga()" class="crear-liga">Crear Nueva Liga</button>
   </div>
 
-  <div *ngIf="misLigas.length > 0">
-    <h2>Mis Ligas</h2>
-    <ul>
-      <li *ngFor="let liga of misLigas" (click)="ligaSeleccionada = liga.id">
-        {{ liga.nombre }} - <button (click)="obtenerParticipantes()">Ver Participantes</button>
-      </li>
-    </ul>
+  <!-- Mostrar todas las ligas -->
+  <div *ngIf="todasLigas.length > 0">
+    <div class="liga-fila" *ngFor="let liga of todasLigas">
+      <div class="liga-info">
+        <span>{{ liga.nombre }}</span>
+        <span><strong>Dueño:</strong> {{ liga["dueño"] }}</span>
+        <span><strong>Nº participantes:</strong> {{ liga.total_participantes }}</span>
+      </div>
+
+      <div class="buttonsLeague">
+      <button class="btn-inspeccionar" (click)="irADetalleLiga(liga)">Inspeccionar</button>
+      <button class="btn-unirse" (click)="mostrarPopupUnirse(liga)">Unirse</button>
+      </div>
+    </div>
   </div>
 
-  <div *ngIf="ligaSeleccionada">
-    <h3>Participantes</h3>
-    <ul>
-      <li *ngFor="let participante of participantes">
-        {{ participante.username }}
-        <button (click)="eliminarParticipante(participante.username)">Eliminar</button>
-      </li>
-    </ul>
+  <!-- Popup dinámico -->
+  <div class="overlay" *ngIf="mostrarPopup" (click)="cerrarPopup()">
+    <div class="popup" (click)="$event.stopPropagation()">
+      <ng-container *ngIf="tipoPopup === 'crear'">
+        <h3>Crear Liga</h3>
+        <input type="text" [(ngModel)]="nombreNuevaLiga" placeholder="Nombre de la liga" />
+        <button (click)="crearLiga()">Crear</button>
+      </ng-container>
 
-    <input type="text" [(ngModel)]="nuevoParticipanteUsername" placeholder="Nombre de usuario" />
-    <button (click)="agregarParticipante()">Agregar Participante</button>
+      <ng-container *ngIf="tipoPopup === 'unirse'">
+        <h3>Unirse a la Liga</h3>
+        <p><strong>{{ ligaIdParaUnirse?.nombre }}</strong></p>
+        <input type="text" [(ngModel)]="codigoUnirse" placeholder="Código de la liga" />
+        <button (click)="unirseConCodigo()">Unirse</button>
+      </ng-container>
+    </div>
   </div>
 </div>
