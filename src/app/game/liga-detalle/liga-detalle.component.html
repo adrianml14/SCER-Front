@@ -1,9 +1,9 @@
 <div class="liga-detalle">
   <h2>Clasificación de la Liga</h2>
-  <ul>
-    <li *ngFor="let participante of participantes">
-      {{ participante.nombre }} - {{ participante.puntos }} puntos
-    </li>
-  </ul>
-  <button (click)="volver()">Volver a las Ligas</button> <!-- Botón para volver -->
+  <div *ngFor="let participante of participantes" class="participante-card">
+    <span class="col-usuario">{{ participante.usuario }}</span>
+    <span class="col-equipo">{{ participante.equipo_nombre }}</span>
+    <span class="col-puntos">{{ participante.puntos }} pts</span>
+  </div>
+  <button (click)="volver()">Volver a las Ligas</button>
 </div>

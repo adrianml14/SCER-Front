@@ -36,7 +36,7 @@ export class LigasService {
   }
 
   obtenerParticipantes(ligaId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}${ligaId}/participantes-lista/`, {
+    return this.http.get(`${this.baseUrl}${ligaId}/participantes/`, {
       withCredentials: true
     });
   }
