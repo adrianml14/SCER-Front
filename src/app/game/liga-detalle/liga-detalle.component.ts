@@ -21,17 +21,35 @@ export class LigaDetalleComponent implements OnInit {
 
   
 
-  ngOnInit(): void {
-    this.ligaId = this.route.snapshot.paramMap.get('id'); // Obtenemos el ID de la liga desde la URL
-    
-    if (this.ligaId) {
-      // Obtenemos los participantes de la liga
-      this.ligasService.obtenerParticipantes(+this.ligaId).subscribe((data) => {
-        // Ordenamos los participantes por puntos (de mayor a menor)
-        this.participantes = data.sort((a: any, b: any) => b.puntos - a.puntos);
+ngOnInit(): void {
+  this.ligaId = this.route.snapshot.paramMap.get('id');
+  
+  if (this.ligaId) {
+    this.ligasService.obtenerParticipantes(+this.ligaId).subscribe((data) => {
+      // Ordenamos de mayor a menor
+      const ordenados = data.sort((a: any, b: any) => b.puntos - a.puntos);
+
+      let posicion = 1;
+      let anterioresPuntos: null = null;
+      let contador = 1;
+
+      this.participantes = ordenados.map((participante: any, index: number) => {
+        if (participante.puntos !== anterioresPuntos) {
+          posicion = contador;
+          anterioresPuntos = participante.puntos;
+        }
+
+        contador += 1;
+
+        return {
+          ...participante,
+          posicion: posicion
+        };
       });
-    }
+    });
   }
+}
+
 
   // Función para volver a la lista de ligas
   volver() {

@@ -56,3 +56,24 @@ h2{
   text-align: center;
   color: #9f9f9f;
 }
+
+.col-usuario {
+  flex: 1.5;
+}
+
+.col-equipo {
+  flex: 2;
+}
+
+.col-puntos {
+  flex: 1;
+  text-align: right;
+  font-weight: bold;
+}
+
+.col-posicion {
+  flex: 0 0 50px;
+  text-align: left;
+  font-weight: bold;
+  margin-right: 10px;
+}

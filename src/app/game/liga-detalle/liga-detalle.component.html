@@ -1,9 +1,13 @@
 <div class="liga-detalle">
   <h2>Clasificación de la Liga</h2>
-  <div *ngFor="let participante of participantes" class="participante-card">
-    <span class="col-usuario">{{ participante.usuario }}</span>
-    <span class="col-equipo">{{ participante.equipo_nombre }}</span>
-    <span class="col-puntos">{{ participante.puntos }} pts</span>
-  </div>
+
+<div *ngFor="let participante of participantes" class="participante-card">
+  <span class="col-posicion">{{ participante.posicion }}º</span>
+  <span class="col-usuario">{{ participante.usuario }}</span>
+  <span class="col-equipo">{{ participante.equipo_nombre || 'Sin equipo' }}</span>
+  <span class="col-puntos">{{ participante.puntos }} pts</span>
+</div>
+
+
   <button (click)="volver()">Volver a las Ligas</button>
 </div>
