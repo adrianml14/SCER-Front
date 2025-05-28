@@ -88,11 +88,13 @@ export class LoginComponent implements OnInit {
             Swal.fire({
               title: "Login correcto",
               icon: "success",
-              draggable: true
+              timer: 1000,
+              showConfirmButton: false,
+              draggable: true,
+                didClose: () => {
+                  this.router.navigate(['/game/mi-equipo']);
+                }
             });
-            setTimeout(() => {
-              this.router.navigate(['/game/mi-equipo']);
-            }, 2000);
           } else {
             console.log('Error en la respuesta del servidor:', response.message);
             this.errorMessage = response.message || 'Error desconocido';
