@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LigasService } from '../../services/ligas.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { UserService } from '../../services/users.service';
 
 @Component({
   standalone: true,
@@ -22,24 +23,36 @@ export class LigasComponent implements OnInit {
   ligaIdParaUnirse: any = null;
   codigoUnirse: string = '';
   tipoPopup: 'crear' | 'unirse' | null = null;
+  esVIP: boolean = false; // 👈 Define flag para mostrar el botón
 
-
-  
   constructor(
     private ligasService: LigasService,
-    private router: Router // Inyectamos Router para el botón "Volver"
+    private userService: UserService, // 👈 Inyecta el servicio
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.obtenerMisLigas();
     this.obtenerTodasLigas();
+    this.verificarRolUsuario(); // 👈 Carga el rol
   }
-  
+
+  verificarRolUsuario() {
+    this.userService.getPerfil().subscribe({
+      next: (res) => {
+        this.esVIP = res.rol === 'VIP';
+      },
+      error: (err) => {
+        console.error('Error al obtener perfil', err);
+        this.esVIP = false;
+      }
+    });
+  }
+
   irADetalleLiga(liga: any): void {
     this.router.navigate(['/game/ligas', liga.id]);
   }
 
-  // Crear nueva liga
   crearLiga() {
     if (!this.nombreNuevaLiga.trim()) {
       alert('Por favor ingresa un nombre para la liga.');
@@ -59,7 +72,6 @@ export class LigasComponent implements OnInit {
     });
   }
 
-  // Obtener mis ligas
   obtenerMisLigas() {
     this.ligasService.obtenerMisLigas().subscribe({
       next: (data) => {
@@ -71,7 +83,6 @@ export class LigasComponent implements OnInit {
     });
   }
 
-  // Obtener todas las ligas
   obtenerTodasLigas() {
     this.ligasService.obtenerTodasLigas().subscribe({
       next: (data) => {
@@ -83,7 +94,6 @@ export class LigasComponent implements OnInit {
     });
   }
 
-  // Obtener participantes de la liga seleccionada
   obtenerParticipantes() {
     if (this.ligaSeleccionada) {
       this.ligasService.obtenerParticipantes(this.ligaSeleccionada.id).subscribe({
@@ -97,7 +107,6 @@ export class LigasComponent implements OnInit {
     }
   }
 
-  // Agregar participante a la liga seleccionada
   agregarParticipante() {
     if (!this.nuevoParticipanteUsername.trim()) {
       alert('Ingresa el nombre de usuario');
@@ -116,7 +125,6 @@ export class LigasComponent implements OnInit {
     });
   }
 
-  // Eliminar participante de la liga seleccionada
   eliminarParticipante(username: string) {
     this.ligasService.eliminarParticipante(this.ligaSeleccionada.id, username).subscribe({
       next: () => {
@@ -130,7 +138,6 @@ export class LigasComponent implements OnInit {
     });
   }
 
-  // Abrir popup para unirse a la liga
   mostrarPopupUnirse(ligaId: number) {
     this.tipoPopup = 'unirse';
     this.ligaIdParaUnirse = ligaId;
@@ -138,22 +145,19 @@ export class LigasComponent implements OnInit {
   }
 
   abrirPopupCrearLiga() {
-  this.tipoPopup = 'crear';
-  this.nombreNuevaLiga = '';
-  this.mostrarPopup = true;
-}
+    this.tipoPopup = 'crear';
+    this.nombreNuevaLiga = '';
+    this.mostrarPopup = true;
+  }
 
-  // Cerrar el popup
-cerrarPopup() {
-  this.mostrarPopup = false;
-  this.codigoUnirse = '';
-  this.nombreNuevaLiga = '';
-  this.ligaIdParaUnirse = null;
-  this.tipoPopup = null; // <-- limpia tipoPopup al cerrar
-}
+  cerrarPopup() {
+    this.mostrarPopup = false;
+    this.codigoUnirse = '';
+    this.nombreNuevaLiga = '';
+    this.ligaIdParaUnirse = null;
+    this.tipoPopup = null;
+  }
 
-
-  // Lógica para unirse a una liga
   unirseConCodigo() {
     if (!this.codigoUnirse.trim()) {
       alert('Código requerido');
@@ -172,9 +176,9 @@ cerrarPopup() {
       }
     });
   }
-  abrirPopupLiga(liga: any) {
-  this.ligaSeleccionada = liga;
-  this.obtenerParticipantes();
-}
 
+  abrirPopupLiga(liga: any) {
+    this.ligaSeleccionada = liga;
+    this.obtenerParticipantes();
+  }
 }

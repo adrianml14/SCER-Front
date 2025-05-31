@@ -1,7 +1,10 @@
 <div class="liga-container">
   <!-- Crear nueva liga -->
   <div>
-    <button (click)="abrirPopupCrearLiga()" class="crear-liga">Crear Nueva Liga</button>
+    <!-- Solo usuarios VIP pueden ver este botón -->
+    <button *ngIf="esVIP" (click)="abrirPopupCrearLiga()">
+      Crear Liga
+    </button>
   </div>
 
   <!-- Mostrar todas las ligas -->
