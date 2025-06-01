@@ -46,9 +46,8 @@ export class RegisterComponent implements OnInit {
             title: `¡Bienvenido ${formData.username}!`,
             text: 'Tu cuenta fue creada correctamente.',
             icon: 'success',
-            timer: 2000,
+            timer: 1000,
             showConfirmButton: false,
-            timerProgressBar: true,
             didClose: () => {
               this.router.navigate(['/login']);
             }

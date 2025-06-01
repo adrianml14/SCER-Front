@@ -3,16 +3,16 @@
   display: flex;
   gap: 30px;
   justify-content: center;
-  /* para que los dos bloques estén centrados */
 }
 
 /* Estilos para cada mitad */
 .ligaGeneral {
   border-radius: 12px;
   padding: 20px;
+  margin-top: 1%;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   width: 45%;
-  min-height: 400px; /* altura mínima para que se vean como "cuadrados" */
+  min-height: 400px;
   display: flex;
   flex-direction: column;
 }
@@ -20,7 +20,7 @@
 .ligasPrivadas {
   border-radius: 12px;
   padding: 10px;
-  margin-top: 10%;
+  margin-top: 4%;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   width: 100%;
   min-height: 20px; 
@@ -28,16 +28,29 @@
   flex-direction: column;
 }
 
-/* Título de Clasificación */
-.ligaGeneral h3 {
+.ligasPrivadas h3 {
+  display: flex;
+  justify-content: center;
+  text-align: center;
   margin-bottom: 20px;
   font-weight: 700;
   font-size: 1.4rem;
-  color: #4a4a4a;
+  color: #8b8b8b;
+}
+
+/* Título de Clasificación */
+.ligaGeneral h3 {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #8b8b8b;
 }
 
 /* Botón Crear Liga */
-.crear-liga {
+.crearLiga {
   margin-bottom: 20px;
   display: inline-flex;
   gap: 10px;
@@ -51,7 +64,7 @@
   transition: background-color 0.3s ease;
 }
 
-.crear-liga:hover {
+.crearLiga:hover {
   background-color: #a45ad4;
 }
 
@@ -88,8 +101,6 @@
   flex-wrap: wrap;
   gap: 40px;
   font-size: 16px;
-  color: #222;
-  font-weight: 600;
   flex: 1;
 }
 
@@ -167,9 +178,6 @@
   border-radius: 4px;
   object-fit: cover;
 }
-
-/* Popup ya lo tienes bien, no toqué */
-
 
 
 /* Overlay del popup */
