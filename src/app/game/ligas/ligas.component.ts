@@ -23,24 +23,28 @@ export class LigasComponent implements OnInit {
   ligaIdParaUnirse: any = null;
   codigoUnirse: string = '';
   tipoPopup: 'crear' | 'unirse' | null = null;
-  esVIP: boolean = false; // 👈 Define flag para mostrar el botón
+  esVIP: boolean = false;
+  usuarioUsername: string = '';
+  clasificacionGeneral: any[] = [];
 
   constructor(
     private ligasService: LigasService,
-    private userService: UserService, // 👈 Inyecta el servicio
+    private userService: UserService,
     private router: Router
   ) {}
 
   ngOnInit() {
     this.obtenerMisLigas();
     this.obtenerTodasLigas();
-    this.verificarRolUsuario(); // 👈 Carga el rol
+    this.obtenerClasificacionGeneral();
+    this.verificarRolUsuario();
   }
 
   verificarRolUsuario() {
     this.userService.getPerfil().subscribe({
       next: (res) => {
         this.esVIP = res.rol === 'VIP';
+        this.usuarioUsername = res.username;
       },
       error: (err) => {
         console.error('Error al obtener perfil', err);
@@ -181,4 +185,15 @@ export class LigasComponent implements OnInit {
     this.ligaSeleccionada = liga;
     this.obtenerParticipantes();
   }
+
+  obtenerClasificacionGeneral() {
+  this.ligasService.obtenerClasificacionGeneral().subscribe({
+    next: (data) => {
+      this.clasificacionGeneral = data;
+    },
+    error: (error) => {
+      console.error('Error al obtener clasificación general', error);
+    }
+  });
+}
 }

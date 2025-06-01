@@ -16,7 +16,7 @@ export class LigaDetalleComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ligasService: LigasService,
-    private router: Router // Inyectamos Router para el botón "Volver"
+    private router: Router
   ) {}
 
   

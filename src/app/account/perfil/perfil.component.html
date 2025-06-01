@@ -1,14 +1,26 @@
 <div class="perfil-container" *ngIf="usuario; else cargando">
-  <div class="perfil-card">
-    <p><strong>Nombre de usuario:</strong> {{ usuario.username }}</p>
-    <p><strong>Correo electrónico:</strong> {{ usuario.email }}</p>
+  <div class="perfil-card perfil-grid">
+    
+    <!-- Información del usuario -->
+    <div class="perfil-info">
+      <p><strong>Nombre de usuario:</strong> {{ usuario.username }}</p>
+      <p><strong>Correo electrónico:</strong> {{ usuario.email }}</p>
+      <p><strong>Nombre del equipo:</strong> {{ nombreEquipo }}</p>
+      <p><strong>Rol:</strong> {{ usuario.rol }}</p>
+    </div>
 
-    <p><strong>Nombre del equipo:</strong> {{ nombreEquipo }}</p>
-    <button (click)="mostrarPopup = true" class="btn-cambiar-nombre">Cambiar nombre del equipo</button>
+    <!-- Acciones del usuario -->
+    <div class="perfil-acciones">
+      <button (click)="mostrarPopup = true" class="btn-cambiar-nombre">Cambiar nombre del equipo</button>
+      <button (click)="cambiarRol()" class="btn-cambiar-rol">
+        {{ usuario.rol === 'VIP' ? 'Dejar de ser VIP' : 'Hacerse VIP' }}
+      </button>
+    </div>
+
   </div>
 </div>
 
-<!-- Popup flotante -->
+<!-- Popup -->
 <div class="overlay" *ngIf="mostrarPopup" (click)="cerrarPopup()">
   <div class="popup" (click)="$event.stopPropagation()">
     <div class="cambiar-nombre-container">
@@ -16,7 +28,7 @@
       <input type="text" id="nombreEquipoInput" [(ngModel)]="nuevoNombreEquipo" class="input-nombre-equipo" />
       <button (click)="cambiarNombreEquipo()" class="btn-guardar-nombre">Guardar</button>
     </div>
-  </div> 
+  </div>
 </div>
 
 <ng-template #cargando>

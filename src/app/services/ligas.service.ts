@@ -51,4 +51,10 @@ export class LigasService {
     return this.http.get<any[]>(this.baseUrl);
   }
 
+  obtenerClasificacionGeneral(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}clasificacion-general/`, {
+      withCredentials: true
+    });
+  }
+
 }

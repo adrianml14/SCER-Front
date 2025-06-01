@@ -1,43 +1,63 @@
-<div class="liga-container">
-  <!-- Crear nueva liga -->
-  <div>
-    <!-- Solo usuarios VIP pueden ver este botón -->
-    <button *ngIf="esVIP" (click)="abrirPopupCrearLiga()">
-      Crear Liga
-    </button>
-  </div>
+<div class="contenedor-principal" style="display: flex; gap: 20px;">
+  <!-- 🧩 MITAD IZQUIERDA: Ligas -->
+  <div style="flex: 1;">
+    <div>
+      <button *ngIf="esVIP" (click)="abrirPopupCrearLiga()">Crear Liga</button>
+    </div>
 
-  <!-- Mostrar todas las ligas -->
-  <div *ngIf="todasLigas.length > 0">
-    <div class="liga-fila" *ngFor="let liga of todasLigas">
-      <div class="liga-info">
-        <span>{{ liga.nombre }}</span>
-        <span><strong>Dueño:</strong> {{ liga["dueño"] }}</span>
-        <span><strong>Nº participantes:</strong> {{ liga.total_participantes }}</span>
-      </div>
+    <!-- Mostrar todas las ligas -->
+    <div *ngIf="todasLigas.length > 0" class="ligasPrivadas">
+      <div class="liga-fila" *ngFor="let liga of todasLigas">
+        <div class="liga-info">
+          <span>{{ liga.nombre }}</span>
+          <span><strong>Dueño:</strong> {{ liga["dueño"] }}</span>
+          <!-- <span><strong>Nº participantes:</strong> {{ liga.total_participantes }}</span> -->
+          <span *ngIf="liga.codigo_unico">
+            <strong>Código:</strong> {{ liga.codigo_unico }}
+          </span>
+        </div>
 
-      <div class="buttonsLeague">
-      <button class="btn-inspeccionar" (click)="irADetalleLiga(liga)">Inspeccionar</button>
-      <button class="btn-unirse" (click)="mostrarPopupUnirse(liga)">Unirse</button>
+        <div class="buttonsLeague">
+          <button class="btn-inspeccionar" (click)="irADetalleLiga(liga)">Inspeccionar</button>
+          <button class="btn-unirse" (click)="mostrarPopupUnirse(liga)">Unirse</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Popup dinámico -->
-  <div class="overlay" *ngIf="mostrarPopup" (click)="cerrarPopup()">
-    <div class="popup" (click)="$event.stopPropagation()">
-      <ng-container *ngIf="tipoPopup === 'crear'">
-        <h3>Crear Liga</h3>
-        <input type="text" [(ngModel)]="nombreNuevaLiga" placeholder="Nombre de la liga" />
-        <button (click)="crearLiga()">Crear</button>
-      </ng-container>
-
-      <ng-container *ngIf="tipoPopup === 'unirse'">
-        <h3>Unirse a la Liga</h3>
-        <p><strong>{{ ligaIdParaUnirse?.nombre }}</strong></p>
-        <input type="text" [(ngModel)]="codigoUnirse" placeholder="Código de la liga" />
-        <button (click)="unirseConCodigo()">Unirse</button>
-      </ng-container>
+  <!-- 🧩 MITAD DERECHA: Clasificación General -->
+  <div style="flex: 1;" class="ligaGeneral">
+    <h3>Clasificación General</h3>
+    <div *ngIf="clasificacionGeneral.length > 0; else sinDatos">
+      <div *ngFor="let user of clasificacionGeneral; index as i" class="tarjeta-ranking">
+        <div class="posicion">{{ i + 1 }}</div>
+        <div class="info-usuario">
+          <img [src]="user.bandera?.imagen_url" alt="Bandera" width="40" height="25" *ngIf="user.bandera">
+          <div class="nombre">{{ user.usuario }}</div>
+          <div class="puntos">{{ user.puntos_totales }} puntos</div>
+        </div>
+      </div>
     </div>
+    <ng-template #sinDatos>
+      <p>No hay datos disponibles.</p>
+    </ng-template>
+  </div>
+</div>
+
+<!-- Popup -->
+<div class="overlay" *ngIf="mostrarPopup" (click)="cerrarPopup()">
+  <div class="popup" (click)="$event.stopPropagation()">
+    <ng-container *ngIf="tipoPopup === 'crear'">
+      <h3>Crear Liga</h3>
+      <input type="text" [(ngModel)]="nombreNuevaLiga" placeholder="Nombre de la liga" />
+      <button (click)="crearLiga()">Crear</button>
+    </ng-container>
+
+    <ng-container *ngIf="tipoPopup === 'unirse'">
+      <h3>Unirse a la Liga</h3>
+      <p><strong>{{ ligaIdParaUnirse?.nombre }}</strong></p>
+      <input type="text" [(ngModel)]="codigoUnirse" placeholder="Código de la liga" />
+      <button (click)="unirseConCodigo()">Unirse</button>
+    </ng-container>
   </div>
 </div>

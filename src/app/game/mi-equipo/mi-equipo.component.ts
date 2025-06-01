@@ -90,9 +90,8 @@ export class MiEquipoComponent implements OnInit {
         Swal.fire({
           title: data.mensaje || 'Elemento vendido exitosamente',
           icon: 'success',
-          timer: 1500,
+          timer: 1000,
           showConfirmButton: false,
-          timerProgressBar: true,
           confirmButtonText: 'OK'
         });
 

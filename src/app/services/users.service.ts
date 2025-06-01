@@ -43,5 +43,12 @@ export class UserService {
       withCredentials: true
     });
   }
+
+  toggleRol(): Observable<any> {
+    return this.http.post(`${this.apiUrl}cambiar-rol/`, {}, {
+      withCredentials: true
+    }).pipe(catchError(this.handleError));
+  }
+
   
 }

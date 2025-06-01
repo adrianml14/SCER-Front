@@ -18,6 +18,7 @@ export class PerfilComponent {
   nombreEquipo: string = 'Mi Equipo';
 
   mostrarPopup: boolean = false;
+  esVIP: boolean = false;
 
 
   constructor(
@@ -49,6 +50,7 @@ export class PerfilComponent {
           this.nombreEquipo = 'Mi Equipo'; // Valor por defecto en caso de error
         }
       });
+    this.verificarRolUsuario();
   }
 
 cambiarNombreEquipo() {
@@ -71,5 +73,34 @@ cambiarNombreEquipo() {
   cerrarPopup() {
   this.mostrarPopup = false;
 }
+
+  verificarRolUsuario() {
+    this.userService.getPerfil().subscribe({
+      next: (res) => {
+        this.esVIP = res.rol === 'VIP';
+      },
+      error: (err) => {
+        console.error('Error al obtener perfil', err);
+        this.esVIP = false;
+      }
+    });
+  }
+
+  cambiarRol() {
+  this.userService.toggleRol().subscribe({
+    next: (res) => {
+      Swal.fire('Rol cambiado', res.mensaje, 'success');
+      // Volver a cargar los datos del perfil
+      this.userService.getPerfil().subscribe({
+        next: (data: any) => this.usuario = data
+      });
+    },
+    error: (err) => {
+      console.error(err);
+      Swal.fire('Error', 'No se pudo cambiar el rol', 'error');
+    }
+  });
+}
+
 
 }

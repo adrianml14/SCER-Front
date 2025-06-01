@@ -55,9 +55,8 @@ export class MercadoComponent implements OnInit {
           Swal.fire({
             title: data.mensaje,
             icon: "success",
-            timer: 1500,
+            timer: 1000,
             showConfirmButton: false,
-            timerProgressBar: true,
             draggable: true
           });
           
