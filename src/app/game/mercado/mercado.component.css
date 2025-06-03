@@ -11,7 +11,8 @@
   .card {
     border: 1px solid #ccc;
     border-radius: 12px;
-    padding: 16px;
+    padding: 14px;
+    padding-bottom: 5px;
     text-align: center;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
     background-color: #B0E4E6;
@@ -30,7 +31,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Oscurece el fondo */
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     cursor: pointer;
     justify-content: center;

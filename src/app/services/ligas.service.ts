@@ -57,4 +57,12 @@ export class LigasService {
     });
   }
 
+  salirDeLiga(ligaId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}${ligaId}/salir/`, {
+      withCredentials: true
+    });
+  }
+
+
+
 }

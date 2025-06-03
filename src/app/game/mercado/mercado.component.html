@@ -10,7 +10,7 @@
         <img [src]="piloto.bandera" alt="bandera" width="30" />
         <p><strong>{{ piloto.nombre }}</strong></p>
         <p>{{ piloto.precio | currency }}</p>
-        <p>Pts-> {{ piloto.puntos_totales}}</p>
+        <p><Strong>{{ piloto.puntos_totales}}</Strong> pts</p>
       </div>
     </div>
   </mat-tab>
@@ -21,7 +21,7 @@
         <img [src]="copiloto.bandera" alt="bandera" width="30" />
         <p><strong>{{ copiloto.nombre }}</strong></p>
         <p>{{ copiloto.precio | currency }}</p>
-        <p>Pts-> {{ copiloto.puntos_totales}}</p>
+        <p><Strong>{{ copiloto.puntos_totales}}</Strong> pts</p>
       </div>
     </div>
   </mat-tab>
@@ -32,7 +32,7 @@
         <img [src]="coche.imagen" alt="coche" width="100" />
         <p><strong>{{ coche.modelo }}</strong></p>
         <p>{{ coche.precio | currency }}</p>
-        <p>Pts-> {{ coche.puntos_totales}}</p>
+        <p><Strong>{{ coche.puntos_totales}}</Strong> pts</p>
       </div>
     </div>
   </mat-tab>

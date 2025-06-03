@@ -1,6 +1,6 @@
 <div class="contenedor-principal" style="display: flex; gap: 20px;">
   <!-- 🧩 MITAD IZQUIERDA: Ligas -->
-  <div style="flex: 1;">
+  <div style="flex: 1.5;">
     <div>
       <button *ngIf="esVIP" (click)="abrirPopupCrearLiga()" class="crearLiga">Crear Liga</button>
     </div>
@@ -12,7 +12,7 @@
         <div class="liga-info">
           <span>{{ liga.nombre }}</span>
           <span><strong>Dueño:</strong> {{ liga["dueño"] }}</span>
-          <!-- <span><strong>Nº participantes:</strong> {{ liga.total_participantes }}</span> -->
+          <span><strong>Participantes:</strong> {{ liga.num_participantes }}</span>
           <span *ngIf="liga.codigo_unico">
             <strong>Código:</strong> {{ liga.codigo_unico }}
           </span>
@@ -20,11 +20,19 @@
 
         <div class="buttonsLeague">
           <button class="btn-inspeccionar" (click)="irADetalleLiga(liga)">Inspeccionar</button>
-          <button class="btn-unirse" (click)="mostrarPopupUnirse(liga)">Unirse</button>
+        <button
+          class="btn-unirse"
+          *ngIf="liga['dueño'] !== usuarioUsername"
+          (click)="liga.soyParticipante ? dejarLiga(liga.id) : mostrarPopupUnirse(liga)">
+          {{ liga.soyParticipante ? 'Dejar liga' : 'Unirse' }}
+        </button>
         </div>
       </div>
     </div>
   </div>
+
+   <!-- Separador -->
+  <div class="vertical-divider"></div>
 
   <!-- 🧩 MITAD DERECHA: Clasificación General -->
   <div style="flex: 1;" class="ligaGeneral">
@@ -35,7 +43,8 @@
         <div class="info-usuario">
           <img [src]="user.bandera?.imagen_url" alt="Bandera" width="40" height="25" *ngIf="user.bandera">
           <div class="nombre">{{ user.usuario }}</div>
-          <div class="puntos">{{ user.puntos_totales }} puntos</div>
+          <div class="nombre_equipo">{{ user.equipo_nombre }}</div>
+          <div class="puntos">{{ user.puntos_totales }} pts</div>
         </div>
       </div>
     </div>

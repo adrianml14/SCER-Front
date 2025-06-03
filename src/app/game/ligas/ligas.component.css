@@ -10,8 +10,9 @@
   border-radius: 12px;
   padding: 20px;
   margin-top: 1%;
+  margin-right: 3%;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  width: 45%;
+  width: 100%;
   min-height: 400px;
   display: flex;
   flex-direction: column;
@@ -21,12 +22,24 @@
   border-radius: 12px;
   padding: 10px;
   margin-top: 4%;
+  margin-left: 3%;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   width: 100%;
   min-height: 20px; 
   display: flex;
   flex-direction: column;
 }
+
+.vertical-divider {
+  width: 1px;
+  background-color: #ccccccc5;
+  height: auto;
+  margin: 0 24px;
+  margin-left: 4.5%;
+  margin-top: 6%;
+  align-self: stretch;  
+}
+
 
 .ligasPrivadas h3 {
   display: flex;
@@ -125,12 +138,12 @@
 }
 
 .btn-unirse {
-  background-color: #CB7CF8;
+  background-color: #a548da;
   color: white;
 }
 
 .btn-unirse:hover {
-  background-color: #b466e2;
+  background-color: rgb(178, 77, 237);
 }
 
 /* Tarjetas ranking */
@@ -168,6 +181,11 @@
 }
 
 .puntos {
+  margin-left: auto;
+  font-size: 0.95rem;
+}
+
+.nombre_equipo {
   margin-left: auto;
   font-size: 0.95rem;
   color: #666;

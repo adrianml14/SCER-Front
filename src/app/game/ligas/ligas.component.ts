@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/users.service';
+import Swal from 'sweetalert2'; // <-- Importación agregada
 
 @Component({
   standalone: true,
@@ -34,10 +35,9 @@ export class LigasComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.obtenerMisLigas();
-    this.obtenerTodasLigas();
-    this.obtenerClasificacionGeneral();
     this.verificarRolUsuario();
+    this.obtenerClasificacionGeneral();
+    this.actualizarLigas();
   }
 
   verificarRolUsuario() {
@@ -59,41 +59,50 @@ export class LigasComponent implements OnInit {
 
   crearLiga() {
     if (!this.nombreNuevaLiga.trim()) {
-      alert('Por favor ingresa un nombre para la liga.');
+      Swal.fire('Nombre requerido', 'Por favor ingresa un nombre para la liga.', 'warning');
       return;
     }
 
     this.ligasService.crearLiga(this.nombreNuevaLiga).subscribe({
       next: (response) => {
-        alert(`Liga creada exitosamente. Código: ${response.codigo_unico}`);
-        this.obtenerMisLigas();
-        this.obtenerTodasLigas();
+        Swal.fire({
+          title: 'Liga creada',
+          text: `Código: ${response.codigo_unico}`,
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        });
+        this.actualizarLigas();
+        this.cerrarPopup();
       },
       error: (error) => {
         console.error('Error al crear liga', error);
-        alert('Error al crear la liga');
+        Swal.fire('Error', 'No se pudo crear la liga', 'error');
       }
     });
   }
 
-  obtenerMisLigas() {
+  actualizarLigas() {
     this.ligasService.obtenerMisLigas().subscribe({
-      next: (data) => {
-        this.misLigas = data;
+      next: (misLigasData) => {
+        this.misLigas = misLigasData;
+        this.ligasService.obtenerTodasLigas().subscribe({
+          next: (todasLigasData) => {
+            this.todasLigas = todasLigasData.map(liga => {
+              const yaEstoy = this.misLigas.some(mia => mia.liga === liga.id);
+              return {
+                ...liga,
+                soyParticipante: yaEstoy
+              };
+            });
+          },
+          error: (error) => {
+            console.error('Error al obtener todas las ligas', error);
+          }
+        });
       },
       error: (error) => {
         console.error('Error al obtener mis ligas', error);
-      }
-    });
-  }
-
-  obtenerTodasLigas() {
-    this.ligasService.obtenerTodasLigas().subscribe({
-      next: (data) => {
-        this.todasLigas = data;
-      },
-      error: (error) => {
-        console.error('Error al obtener todas las ligas', error);
       }
     });
   }
@@ -113,18 +122,18 @@ export class LigasComponent implements OnInit {
 
   agregarParticipante() {
     if (!this.nuevoParticipanteUsername.trim()) {
-      alert('Ingresa el nombre de usuario');
+      Swal.fire('Campo vacío', 'Ingresa el nombre de usuario', 'warning');
       return;
     }
 
     this.ligasService.agregarParticipante(this.ligaSeleccionada.id, this.nuevoParticipanteUsername).subscribe({
       next: () => {
-        alert('Participante agregado');
+        Swal.fire('Éxito', 'Participante agregado', 'success');
         this.obtenerParticipantes();
       },
       error: (error) => {
         console.error('Error al agregar participante', error);
-        alert('Error al agregar participante');
+        Swal.fire('Error', 'No se pudo agregar el participante', 'error');
       }
     });
   }
@@ -132,19 +141,37 @@ export class LigasComponent implements OnInit {
   eliminarParticipante(username: string) {
     this.ligasService.eliminarParticipante(this.ligaSeleccionada.id, username).subscribe({
       next: () => {
-        alert('Participante eliminado');
+        Swal.fire('Eliminado', 'Participante eliminado', 'success');
         this.obtenerParticipantes();
       },
       error: (error) => {
         console.error('Error al eliminar participante', error);
-        alert('Error al eliminar participante');
+        Swal.fire('Error', 'No se pudo eliminar el participante', 'error');
       }
     });
   }
 
-  mostrarPopupUnirse(ligaId: number) {
+  dejarLiga(ligaId: number) {
+    this.ligasService.salirDeLiga(ligaId).subscribe({
+      next: () => {
+        Swal.fire({
+          title: 'Te Saliste de la liga',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        this.actualizarLigas();
+      },
+      error: (error) => {
+        console.error('Error al salir de la liga', error);
+        Swal.fire('Error', 'No se pudo salir de la liga', 'error');
+      }
+    });
+  }
+
+  mostrarPopupUnirse(liga: any) {
     this.tipoPopup = 'unirse';
-    this.ligaIdParaUnirse = ligaId;
+    this.ligaIdParaUnirse = liga;
     this.mostrarPopup = true;
   }
 
@@ -164,19 +191,23 @@ export class LigasComponent implements OnInit {
 
   unirseConCodigo() {
     if (!this.codigoUnirse.trim()) {
-      alert('Código requerido');
+      Swal.fire('Código requerido', 'Por favor ingresa un código', 'warning');
       return;
     }
 
     this.ligasService.unirsePorCodigo(this.codigoUnirse).subscribe({
       next: (res) => {
-        alert(res.mensaje || 'Te has unido a la liga');
-        this.obtenerMisLigas();
-        this.obtenerTodasLigas();
+        Swal.fire({
+          title: res.mensaje || 'Te has unido a la liga',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        this.actualizarLigas();
         this.cerrarPopup();
       },
       error: (error) => {
-        alert(error.error.error || 'Código incorrecto');
+        Swal.fire('Error', error.error.error || 'Código incorrecto', 'error');
       }
     });
   }
@@ -187,13 +218,13 @@ export class LigasComponent implements OnInit {
   }
 
   obtenerClasificacionGeneral() {
-  this.ligasService.obtenerClasificacionGeneral().subscribe({
-    next: (data) => {
-      this.clasificacionGeneral = data;
-    },
-    error: (error) => {
-      console.error('Error al obtener clasificación general', error);
-    }
-  });
-}
+    this.ligasService.obtenerClasificacionGeneral().subscribe({
+      next: (data) => {
+        this.clasificacionGeneral = data;
+      },
+      error: (error) => {
+        console.error('Error al obtener clasificación general', error);
+      }
+    });
+  }
 }
