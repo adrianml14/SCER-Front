@@ -1,1 +1,37 @@
-<p>gestion-bugs works!</p>
+<div class="contenedor">
+    <h2>Gestión de Reportes de Bugs</h2>
+
+    <div *ngIf="cargando">Cargando...</div>
+
+    <table *ngIf="!cargando && bugs.length > 0">
+    <thead>
+        <tr>
+        <th>ID</th>
+        <th>Descripción</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let bug of bugs">
+        <td>{{ bug.id }}</td>
+        <td>{{ bug.descripcion }}</td>
+        <td>{{ bug.fecha | date:'short' }}</td>
+        <td>
+            <span [ngClass]="{'resuelto': bug.resuelto, 'pendiente': !bug.resuelto}">
+            {{ bug.resuelto ? 'Resuelto' : 'Pendiente' }}
+            </span>
+        </td>
+        <td>
+            <button (click)="toggleResuelto(bug)">Cambiar estado</button>
+            <button (click)="eliminarBug(bug.id!)">Eliminar</button>
+        </td>
+        </tr>
+    </tbody>
+    </table>
+
+    <div *ngIf="!cargando && bugs.length === 0">
+    No hay reportes de bugs.
+    </div>
+</div>

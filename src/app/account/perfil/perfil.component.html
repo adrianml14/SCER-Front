@@ -27,6 +27,10 @@
   </div>
 
   <button (click)="abrirPopupBug()" class="btn-reportar-bug">Reportar bug</button>
+  <button *ngIf="esAdmin" (click)="irGestionBugs()" class="btn-gestion-bugs">
+    Gestionar bugs
+  </button>
+
 </div>
 
 <!-- Popup para cambiar nombre del equipo -->

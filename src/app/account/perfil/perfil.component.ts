@@ -1,38 +1,40 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/users.service';
 import { RallyService } from '../../services/rally.service';
-import Swal from 'sweetalert2';
-import { FormsModule } from '@angular/forms';
 import { BugReport, BugReportService } from '../../services/bug-report.service';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule, NgIf], // Solo NgIf porque no usas NgFor ni NgClass en tu HTML
   templateUrl: './perfil.component.html',
-  styleUrl: './perfil.component.css'
+  styleUrls: ['./perfil.component.css']
 })
 export class PerfilComponent {
   usuario: any;
-  error: string | undefined;
+  error?: string;
   nuevoNombreEquipo: string = '';
   nombreEquipo: string = 'Mi Equipo';
-  mostrarPopupBug: boolean = false;
-
-  mostrarPopup: boolean = false;
-  esVIP: boolean = false;
-  esAdmin: boolean = false;
+  mostrarPopupBug = false;
+  mostrarPopup = false;
+  esVIP = false;
+  esAdmin = false;
 
   // Para reporte de bug
-  descripcionBug: string = '';
-  reporteEnviado: boolean = false;
-  errorEnvio: string = '';
+  descripcionBug = '';
+  reporteEnviado = false;
+  errorEnvio = '';
 
   constructor(
     private userService: UserService,
     private rallyService: RallyService,
     private equipoService: RallyService,
     private bugReportService: BugReportService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +58,7 @@ export class PerfilComponent {
         this.esVIP = data.rol === 'VIP';
         this.esAdmin = data.rol === 'Administrador';
       },
-      error: (err: any) => {
+      error: (err) => {
         console.error(err);
         this.error = 'No se pudo cargar la información del perfil.';
       }
@@ -165,7 +167,6 @@ export class PerfilComponent {
       }).then((result) => {
         if (result.isConfirmed && result.value) {
           const clave = result.value;
-
           this.userService.toggleAdmin({ clave }).subscribe({
             next: (res) => {
               Swal.fire({
@@ -226,5 +227,9 @@ export class PerfilComponent {
         });
       }
     });
+  }
+
+  irGestionBugs() {
+    this.router.navigate(['/admin/gestion-bugs']);
   }
 }
