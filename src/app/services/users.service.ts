@@ -50,5 +50,12 @@ export class UserService {
     }).pipe(catchError(this.handleError));
   }
 
+  toggleAdmin(data: { clave?: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}cambiar-admin/`, data, {
+      withCredentials: true
+    }).pipe(catchError(this.handleError));
+  }
+
+
   
 }

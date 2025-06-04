@@ -9,18 +9,27 @@
       <p><strong>Rol:</strong> {{ usuario.rol }}</p>
     </div>
 
-    <!-- Acciones del usuario -->
     <div class="perfil-acciones">
       <button (click)="mostrarPopup = true" class="btn-cambiar-nombre">Cambiar nombre del equipo</button>
-      <button (click)="cambiarRol()" class="btn-cambiar-rol">
-        {{ usuario.rol === 'VIP' ? 'Dejar de ser VIP' : 'Hacerse VIP' }}
+
+      <!-- Botón para toggle VIP solo si NO es Admin -->
+      <button *ngIf="!esAdmin" (click)="cambiarRol()" class="btn-cambiar-rol">
+        {{ esVIP ? 'Dejar de ser VIP' : 'Hacerse VIP' }}
+      </button>
+
+      <!-- Botón para toggle Admin -->
+      <button (click)="cambiarAdmin()" class="btn-hacerse-admin">
+        {{ esAdmin ? 'Dejar de ser Administrador' : 'Entrar como Administrador' }}
       </button>
     </div>
 
+
   </div>
+
+  <button (click)="abrirPopupBug()" class="btn-reportar-bug">Reportar bug</button>
 </div>
 
-<!-- Popup -->
+<!-- Popup para cambiar nombre del equipo -->
 <div class="overlay" *ngIf="mostrarPopup" (click)="cerrarPopup()">
   <div class="popup" (click)="$event.stopPropagation()">
     <div class="cambiar-nombre-container">
@@ -28,6 +37,18 @@
       <input type="text" id="nombreEquipoInput" [(ngModel)]="nuevoNombreEquipo" class="input-nombre-equipo" />
       <button (click)="cambiarNombreEquipo()" class="btn-guardar-nombre">Guardar</button>
     </div>
+  </div>
+</div>
+
+<!-- Popup para reportar bug -->
+<div class="overlay" *ngIf="mostrarPopupBug" (click)="cerrarPopupBug()">
+  <div class="popup-bug" (click)="$event.stopPropagation()">
+    <h3>Reportar un bug</h3>
+    <textarea [(ngModel)]="descripcionBug" placeholder="Describe el problema..." rows="4"></textarea>
+    <button (click)="enviarReporteBug()">Enviar reporte</button>
+
+    <p *ngIf="reporteEnviado" class="mensaje-exito">Reporte enviado correctamente. ¡Gracias!</p>
+    <p *ngIf="errorEnvio" class="mensaje-error">{{ errorEnvio }}</p>
   </div>
 </div>
 

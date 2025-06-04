@@ -23,13 +23,13 @@ export class LigasService {
   }
 
   agregarParticipante(ligaId: number, username: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}${ligaId}/participantes/`, { username }, {
+    return this.http.post(`${this.baseUrl}${ligaId}participantes/`, { username }, {
       withCredentials: true
     });
   }
 
   eliminarParticipante(ligaId: number, username: string): Observable<any> {
-    return this.http.request('delete', `${this.baseUrl}${ligaId}/participantes/`, {
+    return this.http.request('delete', `${this.baseUrl}${ligaId}participantes/`, {
       body: { username },
       withCredentials: true
     });
