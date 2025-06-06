@@ -46,5 +46,23 @@
     <p>{{ elementoSeleccionado.precio | currency }}</p>
     <button *ngIf="tipoSeleccionado === 'coche'" (click)="comprar()">Comprar</button>
     <button *ngIf="tipoSeleccionado !== 'coche'" (click)="comprar()">Contratar</button>
+    <button (click)="cargarHistorialElemento()">Ver historial</button>
+
+    <!-- Historial desplegable -->
+    <div *ngIf="mostrarHistorial && historialElemento.length > 0" class="historial-box">
+      <h4>Historial</h4>
+      <div *ngFor="let item of historialElemento" class="historial-item">
+        <p><strong>Rally:</strong> {{ item.rally_nombre }}</p>
+        <p><strong>Equipo:</strong> {{ item.equipo }}</p>
+        <p><strong>Posición:</strong> {{ item.posicion !== null ? item.posicion : 'Fuera del TOP10' }}</p>
+        <p><strong>Puntos:</strong> {{ item.puntos }}</p>
+        <hr />
+      </div>
+    </div>
+
+    <div *ngIf="mostrarHistorial && historialElemento.length === 0">
+      <p>No hay historial disponible.</p>
+    </div>
+
   </div>
 </div>

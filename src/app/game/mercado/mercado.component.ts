@@ -16,6 +16,8 @@ import Swal from 'sweetalert2'
 export class MercadoComponent implements OnInit {
   private rallyService = inject(RallyService);
   presupuesto: number | null = null;
+  historialElemento: any[] = [];
+  mostrarHistorial = false;
 
 
   pilotos: any[] = [];
@@ -46,6 +48,8 @@ export class MercadoComponent implements OnInit {
     this.cargarMercadoFiltrado();
     this.elementoSeleccionado = null;
     this.tipoSeleccionado = null;
+    this.mostrarHistorial = false;
+    this.historialElemento = [];
   }
 
   comprar() {
@@ -114,5 +118,34 @@ export class MercadoComponent implements OnInit {
       });
     });
   }
+
+
+cargarHistorialElemento() {
+  if (!this.elementoSeleccionado || !this.tipoSeleccionado) return;
+
+  let request;
+  if (this.tipoSeleccionado === 'piloto') {
+    request = this.rallyService.getHistoricoPiloto(this.elementoSeleccionado.id);
+  } else if (this.tipoSeleccionado === 'copiloto') {
+    request = this.rallyService.getHistoricoCopiloto(this.elementoSeleccionado.id);
+  } else if (this.tipoSeleccionado === 'coche') {
+    request = this.rallyService.getHistoricoCoche(this.elementoSeleccionado.id);
+  }
+
+  if (request) {
+    request.subscribe({
+      next: (data) => {
+        this.historialElemento = data;
+        this.mostrarHistorial = !this.mostrarHistorial;
+      },
+      error: (err) => {
+        console.error('Error cargando historial:', err);
+        this.historialElemento = [];
+        this.mostrarHistorial = false;
+      }
+    });
+  }
+}
+
 
 }

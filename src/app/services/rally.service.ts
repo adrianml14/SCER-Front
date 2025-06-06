@@ -43,15 +43,15 @@ export class RallyService {
 
   //obtener mi equipo
   getMisPilotos() {
-    return this.http.get<any[]>('http://127.0.0.1:8000/api/rally/mis-pilotos/', { withCredentials: true });
+    return this.http.get<any[]>(`${this.apiUrl}/mis-pilotos/`, { withCredentials: true });
   }
   
   getMisCopilotos() {
-    return this.http.get<any[]>('http://127.0.0.1:8000/api/rally/mis-copilotos/', { withCredentials: true });
+    return this.http.get<any[]>(`${this.apiUrl}/mis-copilotos/`, { withCredentials: true });
   }
   
   getMisCoches() {
-    return this.http.get<any[]>('http://127.0.0.1:8000/api/rally/mis-coches/', { withCredentials: true });
+    return this.http.get<any[]>(`${this.apiUrl}/mis-coches/`, { withCredentials: true });
   }
 
   // nombre del equipo fantasy
@@ -63,5 +63,28 @@ export class RallyService {
     return this.http.post(`${this.apiUrl}/cambiar-nombre-equipo/`, { nombre_equipo: nuevoNombre }, { withCredentials: true });
   }
   
-  
+  // Histórico de un piloto
+  getHistoricoPiloto(pilotoId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/historico/piloto/${pilotoId}/`, { withCredentials: true });
+  }
+
+  // Histórico de un copiloto
+  getHistoricoCopiloto(copilotoId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/historico/copiloto/${copilotoId}/`, { withCredentials: true });
+  }
+
+  // Histórico de un coche
+  getHistoricoCoche(cocheId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/historico/coche/${cocheId}/`, { withCredentials: true });
+  }
+
+  // Histórico del usuario autenticado
+  getHistoricoUsuario(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/historico-usuario/`, { withCredentials: true });
+  }
+
+  // Clasificación por rally (todos los rallies con sus clasificaciones)
+  getClasificacionPorRally(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/clasificacion-por-rally/`, { withCredentials: true });
+  }
 } 
