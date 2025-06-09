@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/users.service';
-import Swal from 'sweetalert2'; // <-- Importación agregada
+import { RallyService } from '../../services/rally.service'; // <-- añadido
+import Swal from 'sweetalert2';
 
 @Component({
   standalone: true,
@@ -31,6 +32,7 @@ export class LigasComponent implements OnInit {
   constructor(
     private ligasService: LigasService,
     private userService: UserService,
+    private rallyService: RallyService, // <-- añadido aquí
     private router: Router
   ) {}
 
@@ -218,7 +220,7 @@ export class LigasComponent implements OnInit {
   }
 
   obtenerClasificacionGeneral() {
-    this.ligasService.obtenerClasificacionGeneral().subscribe({
+    this.rallyService.getClasificacionGeneral().subscribe({
       next: (data) => {
         this.clasificacionGeneral = data;
       },

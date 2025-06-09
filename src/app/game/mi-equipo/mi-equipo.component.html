@@ -2,7 +2,7 @@
   <h2>{{ nombreEquipo }}</h2>
 
   <div *ngIf="presupuesto !== null; else cargando">
-    <p class="presupuesto"><strong>Presupuesto disponible:</strong> {{ presupuesto | currency:'EUR' }}</p>
+    <p class="presupuesto"><strong>Presupuesto disponible:</strong> {{ presupuesto |number:'1.2-2' }} €</p>
 
     <div class="grid-layout">
       <!-- Columna Pilotos -->
@@ -11,8 +11,10 @@
         <div *ngFor="let piloto of pilotos" class="card" (click)="abrirPopup('piloto', piloto)">
           <img [src]="piloto.bandera" width="30" />
           <p><strong>{{ piloto.nombre }}</strong></p>
-          <p>{{ piloto.precio | currency }}</p>
-          <p><Strong>{{ piloto.puntos_totales}}</Strong> pts</p>
+          <p>{{ piloto.precio | number:'1.2-2' }} €</p>
+          <div class="puntos">
+            <p class="pts"><Strong class="puntosStrong">{{ piloto.puntos_totales}}</Strong> pts</p>
+          </div>
         </div>
       </div>
 
@@ -25,8 +27,10 @@
         <div *ngFor="let copiloto of copilotos" class="card" (click)="abrirPopup('copiloto', copiloto)">
           <img [src]="copiloto.bandera" width="30" />
           <p><strong>{{ copiloto.nombre }}</strong></p>
-          <p>{{ copiloto.precio | currency }}</p>
-          <p><Strong>{{ copiloto.puntos_totales}}</Strong> pts</p>
+          <p>{{ copiloto.precio | number:'1.2-2' }} €</p>
+          <div class="puntos">
+            <p class="pts"><Strong class="puntosStrong">{{ copiloto.puntos_totales}}</Strong> pts</p>
+          </div>
         </div>
       </div>
 
@@ -39,8 +43,10 @@
         <div *ngFor="let coche of coches" class="card" (click)="abrirPopup('coche', coche)">
           <img [src]="coche.imagen" width="100" />
           <p><strong>{{ coche.modelo }}</strong></p>
-          <p>{{ coche.precio | currency }}</p>
-          <p> <Strong>{{ coche.puntos_totales}}</Strong> pts</p>
+          <p>{{ coche.precio | number:'1.2-2' }} €</p>
+          <div class="puntos">
+            <p class="pts"> <Strong class="puntosStrong">{{ coche.puntos_totales}}</Strong> pts</p>
+          </div>
         </div>
       </div>
     </div>
@@ -59,5 +65,29 @@
     <p><strong>{{ elementoSeleccionado.nombre || elementoSeleccionado.modelo }}</strong></p>
     <p>{{ elementoSeleccionado.precio | currency }}</p>
     <button (click)="vender()">Vender</button>
+  </div>
+</div>
+
+
+<!-- Botón para mostrar puntos por rally -->
+<div class="clasificacion-btn-container">
+  <button class="ver-clasificacion-btn" (click)="mostrarClasificacion = true">
+    Ver puntos por rally
+  </button>
+</div>
+
+<!-- Modal de clasificación por rally -->
+<div class="overlay" *ngIf="mostrarClasificacion" (click)="mostrarClasificacion = false">
+  <div class="popup clasificacion-popup" (click)="$event.stopPropagation()">
+    <h3>Puntos por Rally</h3>
+    <ul *ngIf="clasificacionUsuario.length > 0; else sinDatos">
+      <li *ngFor="let entrada of clasificacionUsuario">
+        <strong>{{ entrada.rally }}</strong>: {{ entrada.puntos }} pts
+      </li>
+    </ul>
+    <ng-template #sinDatos>
+      <p>No se encontraron puntos para tu equipo aún.</p>
+    </ng-template>
+    <button (click)="mostrarClasificacion = false">Cerrar</button>
   </div>
 </div>

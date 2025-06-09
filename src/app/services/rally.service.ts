@@ -78,13 +78,14 @@ export class RallyService {
     return this.http.get(`${this.apiUrl}/historico/coche/${cocheId}/`, { withCredentials: true });
   }
 
-  // Histórico del usuario autenticado
-  getHistoricoUsuario(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/historico-usuario/`, { withCredentials: true });
-  }
-
   // Clasificación por rally (todos los rallies con sus clasificaciones)
   getClasificacionPorRally(): Observable<any> {
     return this.http.get(`${this.apiUrl}/clasificacion-por-rally/`, { withCredentials: true });
   }
+
+    // Clasificación general (sumando puntos de todos los rallies)
+  getClasificacionGeneral(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/clasificacion-general/`, { withCredentials: true });
+  }
+
 } 

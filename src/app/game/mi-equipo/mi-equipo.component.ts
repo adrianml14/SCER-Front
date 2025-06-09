@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RallyService } from '../../services/rally.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import Swal from 'sweetalert2';
+import { UserService } from '../../services/users.service';
 
 @Component({
   selector: 'app-mi-equipo',
@@ -14,6 +15,9 @@ export class MiEquipoComponent implements OnInit {
   presupuesto: number | null = null;
   nombreEquipo: string = 'Mi Equipo';
   error: string = '';
+  clasificacionUsuario: any[] = []; // puntos por rally del usuario
+  mostrarClasificacion: boolean = false;
+  usuarioUsername: string = '';
 
   pilotos: any[] = [];
   copilotos: any[] = [];
@@ -22,52 +26,84 @@ export class MiEquipoComponent implements OnInit {
   elementoSeleccionado: any = null;
   tipoSeleccionado: 'piloto' | 'copiloto' | 'coche' | null = null;
 
-  constructor(private equipoService: RallyService) {}
+  constructor(private equipoService: RallyService, private userService: UserService) {}
+
 
   ngOnInit(): void {
-    const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
-    if (token) {
-      // Obtener presupuesto
-      this.equipoService.getPresupuesto().subscribe({
-        next: (data) => this.presupuesto = data.presupuesto,
-        error: (err) => {
-          console.error('Error al obtener el presupuesto:', err);
-          this.error = 'No se pudo cargar el presupuesto';
-        }
-      });
+  if (!token) {
+    this.error = 'No se encontró el token. Por favor, inicia sesión nuevamente.';
+    return;
+  }
 
-      // Obtener nombre del equipo
-      this.equipoService.getNombreEquipo().subscribe({
+  // Obtener perfil del usuario para luego filtrar clasificación
+  this.userService.getPerfil().subscribe({
+    next: (perfil) => {
+      this.usuarioUsername = perfil.username;
+
+      // Obtener clasificación por rally y filtrar solo los puntos del usuario actual
+      this.equipoService.getClasificacionPorRally().subscribe({
         next: (data) => {
-          console.log('Nombre del equipo recibido:', data.nombre); // Verifica lo que se recibe
-          this.nombreEquipo = data.nombre || 'Mi Equipo';
+          // Suponiendo que cada entrada tiene: rally, clasificacion[]
+          this.clasificacionUsuario = data
+            .map((rallyEntry: any) => {
+              const userEntry = rallyEntry.clasificacion.find(
+                (c: any) => c.usuario === this.usuarioUsername
+              );
+              return userEntry ? { rally: rallyEntry.rally, puntos: userEntry.puntos } : null;
+            })
+            .filter((entry: any) => entry !== null);
         },
         error: (err) => {
-          console.error('Error al obtener el nombre del equipo:', err);
-          this.nombreEquipo = 'Mi Equipo'; // Valor por defecto en caso de error
+          console.error('Error al cargar la clasificación por rally:', err);
         }
       });
-
-      // Cargar elementos del equipo
-      this.equipoService.getMisPilotos().subscribe({
-        next: (data) => this.pilotos = data,
-        error: () => console.error('Error al cargar pilotos')
-      });
-
-      this.equipoService.getMisCopilotos().subscribe({
-        next: (data) => this.copilotos = data,
-        error: () => console.error('Error al cargar copilotos')
-      });
-
-      this.equipoService.getMisCoches().subscribe({
-        next: (data) => this.coches = data,
-        error: () => console.error('Error al cargar coches')
-      });
-    } else {
-      this.error = 'No se encontró el token. Por favor, inicia sesión nuevamente.';
+    },
+    error: (err) => {
+      console.error('Error al obtener perfil del usuario:', err);
+      this.error = 'No se pudo cargar el perfil del usuario.';
     }
-  }
+  });
+
+  // Obtener presupuesto
+  this.equipoService.getPresupuesto().subscribe({
+    next: (data) => this.presupuesto = data.presupuesto,
+    error: (err) => {
+      console.error('Error al obtener el presupuesto:', err);
+      this.error = 'No se pudo cargar el presupuesto';
+    }
+  });
+
+  // Obtener nombre del equipo
+  this.equipoService.getNombreEquipo().subscribe({
+    next: (data) => {
+      console.log('Nombre del equipo recibido:', data.nombre);
+      this.nombreEquipo = data.nombre || 'Mi Equipo';
+    },
+    error: (err) => {
+      console.error('Error al obtener el nombre del equipo:', err);
+      this.nombreEquipo = 'Mi Equipo';
+    }
+  });
+
+  // Cargar elementos del equipo
+  this.equipoService.getMisPilotos().subscribe({
+    next: (data) => this.pilotos = data,
+    error: () => console.error('Error al cargar pilotos')
+  });
+
+  this.equipoService.getMisCopilotos().subscribe({
+    next: (data) => this.copilotos = data,
+    error: () => console.error('Error al cargar copilotos')
+  });
+
+  this.equipoService.getMisCoches().subscribe({
+    next: (data) => this.coches = data,
+    error: () => console.error('Error al cargar coches')
+  });
+}
+
 
   abrirPopup(tipo: 'piloto' | 'copiloto' | 'coche', item: any) {
     this.tipoSeleccionado = tipo;
