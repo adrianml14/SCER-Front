@@ -49,7 +49,7 @@
   <div class="popup" (click)="$event.stopPropagation()">
     <img [src]="elementoSeleccionado.bandera || elementoSeleccionado.imagen" width="60" />
     <p><strong>{{ elementoSeleccionado.nombre || elementoSeleccionado.modelo }}</strong></p>
-    <p>{{ elementoSeleccionado.precio | currency }}</p>
+    <p>{{ elementoSeleccionado.precio | number:'1.2-2' }} €</p>
     <button *ngIf="tipoSeleccionado === 'coche'" (click)="comprar()">Comprar</button>
     <button *ngIf="tipoSeleccionado !== 'coche'" (click)="comprar()">Contratar</button>
     <button (click)="cargarHistorialElemento()">Ver historial</button>

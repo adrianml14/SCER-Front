@@ -1,4 +1,4 @@
-.equipo-container {
+ .equipo-container {
     padding: 20px;
     text-align: center;
   }
@@ -48,7 +48,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Oscurece el fondo */
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     cursor: pointer;
     justify-content: center;
@@ -83,16 +83,16 @@
   }
   
   button:hover {
-  background-color: #923ec3;
-  color: white;
+    background-color: #923ec3;
+    color: white;
   }
 
   .clasificacion-btn-container {
-  position: absolute;
-  top: 10%;
-  right: 20px;
-  z-index: 10;
-}
+    position: absolute;
+    top: 10%;
+    right: 20px;
+    z-index: 10;
+  }
 
 .clasificacion-popup ul {
   list-style: none;
@@ -139,3 +139,12 @@
     width: auto;
   }
   
+  @media (max-height: 400px){
+    
+  .clasificacion-btn-container {
+    position: absolute;
+    top: 20%;
+    right: 20px;
+    z-index: 10;
+  }
+  }

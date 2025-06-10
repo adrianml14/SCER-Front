@@ -65,6 +65,7 @@
 /* Botón Crear Liga */
 .crearLiga {
   margin-bottom: 20px;
+  margin-left: 4%;
   display: inline-flex;
   gap: 10px;
   background-color: #CB7CF8;
@@ -212,28 +213,108 @@
   z-index: 1000;
 }
 
-/* Contenido del popup */
+/* Contenedor del popup */
 .popup {
   background-color: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
-  width: 300px;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  width: 320px;
   text-align: center;
+  font-family: inherit;
+  color: #333;
 }
 
+/* Título del popup */
+.popup h3 {
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  color: #000000;
+  font-weight: 700;
+}
+
+/* Inputs dentro del popup */
 .popup input {
   width: 100%;
-  padding: 8px;
-  margin: 15px 0;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.popup button {
-  margin: 5px;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  background-color: #4CAF50;
-  color: white;
-  cursor: pointer;
+.popup input:focus {
+  border-color: #a548da;
+  box-shadow: 0 0 6px rgba(165, 72, 218, 0.3);
 }
+
+/* Botones del popup */
+.popup button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #a548da;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
+  width: 30%;
+}
+
+.popup button:hover {
+  background-color: rgb(178, 77, 237);
+}
+
+@media screen and (max-width: 1024px) and (orientation: landscape),
+       screen and (max-width: 768px) {
+  /* Asegura que los contenedores no se colapsen */
+  .contenedor-principal {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ligaGeneral {
+    width: 45%;
+    min-width: 300px;
+    margin: 1% 1%;
+  }
+
+  .ligasPrivadas {
+    width: 45%;
+    min-width: 300px;
+    margin: 1% 1%;
+  }
+
+  /* SOLO en ligas privadas reorganizamos contenido */
+  .ligasPrivadas .liga-fila {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ligasPrivadas .liga-info {
+    width: 100%;
+    margin-bottom: 10px;
+    gap: 16px;
+  }
+
+  .ligasPrivadas .buttonsLeague {
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .ligasPrivadas .btn-inspeccionar,
+  .ligasPrivadas .btn-unirse {
+    width: 100%;
+    text-align: center;
+  }
+
+  .vertical-divider {
+    display: none;
+  }
+}
+
+

@@ -76,14 +76,14 @@
   }
   
   .historial-box {
-  max-height: 300px; /* Puedes ajustar la altura según tu diseño */
-  overflow-y: auto;
-  margin-top: 10px;
-  padding-right: 10px; /* Para evitar que el scroll tape el contenido */
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #B0E4E6;
-}
+    max-height: 240px; /* Puedes ajustar la altura según tu diseño */
+    overflow-y: auto;
+    margin-top: 10px;
+    padding-right: 10px; /* Para evitar que el scroll tape el contenido */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #B0E4E6;
+  }
 
   .pts{
     font-size: 15px;
@@ -100,4 +100,17 @@
     background-color: #c88addaa;
     height: auto;
     width: auto;
+  }
+
+  @media (max-height: 408px) {
+    .historial-box {
+      max-height: 180px;
+      max-width: 250px;
+      overflow-y: auto;
+      margin-top: 10px;
+      padding-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #B0E4E6;
+    }
   }

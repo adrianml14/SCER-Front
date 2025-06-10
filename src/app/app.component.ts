@@ -14,10 +14,14 @@ import { filter } from 'rxjs/operators';
 export class AppComponent implements OnInit {
   title = 'SCER-Front';
   showToolbar = true;
+  isLandscape: boolean = true;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
+    this.checkOrientation();
+    window.addEventListener('orientationchange', this.checkOrientation);
+    window.addEventListener('resize', this.checkOrientation);
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
@@ -32,6 +36,10 @@ export class AppComponent implements OnInit {
           
         }
       });
-      
   }
+
+    checkOrientation = () => {
+    const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+    this.isLandscape = isLandscape;
+  };
 }

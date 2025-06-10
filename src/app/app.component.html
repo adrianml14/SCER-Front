@@ -1,2 +1,10 @@
 <app-barra *ngIf="showToolbar"></app-barra>
 <router-outlet></router-outlet>
+
+<div *ngIf="!isLandscape" class="orientation-block">
+  <p>🔄 Gira tu dispositivo</p>
+</div>
+
+<div *ngIf="isLandscape">
+  <router-outlet></router-outlet>
+</div>

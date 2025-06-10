@@ -46,7 +46,7 @@
 
       <!-- Columna Coches -->
       <div class="column">
-        <h3>Coches</h3>
+        <h3>Coche</h3>
         <div *ngFor="let coche of coches" class="card" (click)="abrirPopup('coche', coche)">
           <img [src]="coche.imagen" width="100" />
           <p><strong>{{ coche.modelo }}</strong></p>

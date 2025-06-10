@@ -14,7 +14,7 @@
   border-radius: 12px;
   box-shadow: 5px 5px 10px 10px rgba(123, 122, 122, 0.337);
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -212,7 +212,7 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-height: 408px) {
   .perfil-card.perfil-reorganizado {
     padding: 1rem;
   }
@@ -232,5 +232,22 @@
 
   .input-nombre-equipo {
     width: 100%;
+  }
+
+  .btn-reportar-bug {
+    position: absolute;
+    top: 5%;
+    right: 20px;
+    background-color: #CB7CF8;
+    color: black;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 500;
+    max-width: 100px;
+    z-index: 1001;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   }
 }
