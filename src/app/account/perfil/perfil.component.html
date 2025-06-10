@@ -1,6 +1,9 @@
 <div class="perfil-container" *ngIf="usuario; else cargando">
-  <div class="perfil-card perfil-grid">
-    
+
+  <!-- Botón reportar bug fuera del contenedor, pero con clase fija para posición -->
+  <button (click)="abrirPopupBug()" class="btn-reportar-bug">Reportar bug</button>
+
+  <div class="perfil-card perfil-reorganizado">
     <!-- Información del usuario -->
     <div class="perfil-info">
       <p><strong>Nombre de usuario:</strong> {{ usuario.username }}</p>
@@ -9,28 +12,26 @@
       <p><strong>Rol:</strong> {{ usuario.rol }}</p>
     </div>
 
-    <div class="perfil-acciones">
+    <!-- Botones debajo de la info -->
+    <div class="perfil-acciones-vertical">
       <button (click)="mostrarPopup = true" class="btn-cambiar-nombre">Cambiar nombre del equipo</button>
 
-      <!-- Botón para toggle VIP solo si NO es Admin -->
+      <!-- VIP toggle solo si NO es Admin -->
       <button *ngIf="!esAdmin" (click)="cambiarRol()" class="btn-cambiar-rol">
         {{ esVIP ? 'Dejar de ser VIP' : 'Hacerse VIP' }}
       </button>
 
-      <!-- Botón para toggle Admin -->
+      <!-- Admin toggle -->
       <button (click)="cambiarAdmin()" class="btn-hacerse-admin">
         {{ esAdmin ? 'Dejar de ser Administrador' : 'Entrar como Administrador' }}
       </button>
+
+      <!-- Gestión de bugs si es Admin -->
+      <button *ngIf="esAdmin" (click)="irGestionBugs()" class="btn-gestion-bugs">
+        Gestionar bugs
+      </button>
     </div>
-
-
   </div>
-
-  <button (click)="abrirPopupBug()" class="btn-reportar-bug">Reportar bug</button>
-  <button *ngIf="esAdmin" (click)="irGestionBugs()" class="btn-gestion-bugs">
-    Gestionar bugs
-  </button>
-
 </div>
 
 <!-- Popup para cambiar nombre del equipo -->
@@ -50,7 +51,6 @@
     <h3>Reportar un bug</h3>
     <textarea [(ngModel)]="descripcionBug" placeholder="Describe el problema..." rows="4"></textarea>
     <button (click)="enviarReporteBug()">Enviar reporte</button>
-
     <p *ngIf="reporteEnviado" class="mensaje-exito">Reporte enviado correctamente. ¡Gracias!</p>
     <p *ngIf="errorEnvio" class="mensaje-error">{{ errorEnvio }}</p>
   </div>

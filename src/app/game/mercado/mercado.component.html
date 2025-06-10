@@ -1,5 +1,5 @@
 <div class="presupuesto-info" *ngIf="presupuesto !== null">
-  <p><strong>Presupuesto disponible:</strong> {{ presupuesto | currency:'EUR' }}</p>
+  <p>Presupuesto disponible: <strong>{{ presupuesto | currency:'EUR' }} </strong></p>
 </div>
 
 
@@ -10,7 +10,9 @@
         <img [src]="piloto.bandera" alt="bandera" width="30" />
         <p><strong>{{ piloto.nombre }}</strong></p>
         <p>{{ piloto.precio | number:'1.2-2' }} €</p>
-        <p><Strong>{{ piloto.puntos_totales}}</Strong> pts</p>
+        <div class="puntos">
+          <p class="pts"><Strong class="puntosStrong">{{ piloto.puntos_totales}}</Strong> pts</p>
+        </div>
       </div>
     </div>
   </mat-tab>
@@ -21,7 +23,9 @@
         <img [src]="copiloto.bandera" alt="bandera" width="30" />
         <p><strong>{{ copiloto.nombre }}</strong></p>
         <p>{{ copiloto.precio | number:'1.2-2' }} €</p>
-        <p><Strong>{{ copiloto.puntos_totales}}</Strong> pts</p>
+          <div class="puntos">
+            <p class="pts"><Strong class="puntosStrong">{{ copiloto.puntos_totales}}</Strong> pts</p>
+          </div>
       </div>
     </div>
   </mat-tab>
@@ -32,7 +36,9 @@
         <img [src]="coche.imagen" alt="coche" width="100" />
         <p><strong>{{ coche.modelo }}</strong></p>
         <p>{{ coche.precio | number:'1.2-2' }} €</p>
-        <p><Strong>{{ coche.puntos_totales}}</Strong> pts</p>
+          <div class="puntos">
+            <p class="pts"> <Strong class="puntosStrong">{{ coche.puntos_totales}}</Strong> pts</p>
+          </div>
       </div>
     </div>
   </mat-tab>

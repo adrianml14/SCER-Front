@@ -1,4 +1,11 @@
 <div class="equipo-container">
+    <!-- Botón para mostrar puntos por rally -->
+  <div class="clasificacion-btn-container">
+    <button class="ver-clasificacion-btn" (click)="mostrarClasificacion = true">
+      Puntos por rally
+    </button>
+  </div>
+  
   <h2>{{ nombreEquipo }}</h2>
 
   <div *ngIf="presupuesto !== null; else cargando">
@@ -66,14 +73,6 @@
     <p>{{ elementoSeleccionado.precio | currency }}</p>
     <button (click)="vender()">Vender</button>
   </div>
-</div>
-
-
-<!-- Botón para mostrar puntos por rally -->
-<div class="clasificacion-btn-container">
-  <button class="ver-clasificacion-btn" (click)="mostrarClasificacion = true">
-    Ver puntos por rally
-  </button>
 </div>
 
 <!-- Modal de clasificación por rally -->
