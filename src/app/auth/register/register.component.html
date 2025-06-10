@@ -25,7 +25,15 @@
       <!-- Password Field -->
       <div class="input-field" [class.invalid]="registerForm.controls['password'].invalid && registerForm.controls['password'].touched">
         <input type="password" formControlName="password" required />
+                <input
+          [type]="verPassword ? 'text' : 'password'"
+          formControlName="password"
+          required
+        />
         <label>Contraseña</label>
+        <i (click)="verPassword = !verPassword" class="toggle-password">
+          {{ verPassword ? '🙈' : '👁️' }}
+        </i>
         <div *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched" class="error">
           <small *ngIf="registerForm.controls['password'].hasError('required')">La contraseña es obligatoria</small>
           <small *ngIf="registerForm.controls['password'].hasError('minlength')">La contraseña debe de ser de al menos 6 digitos</small>
@@ -37,7 +45,7 @@
 
       <!-- Link to Login -->
       <div class="register">
-        <p>¿Ya tienes una cuenta? <a routerLink="/login">Login</a></p>
+        <p>¿Ya tienes una cuenta? <a routerLink="/login">Iniciar Sesión</a></p>
       </div>
     </form>
   </div>

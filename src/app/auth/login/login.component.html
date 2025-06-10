@@ -15,16 +15,23 @@
       </div>
 
       <!-- Password field -->
-      <div class="input-field">
-        <input formControlName="password" type="password" required />
+      <div class="input-field password-field">
+        <input
+          [type]="verPassword ? 'text' : 'password'"
+          formControlName="password"
+          required
+        />
         <label>Contraseña</label>
+        <i (click)="verPassword = !verPassword" class="toggle-password">
+          {{ verPassword ? '🙈' : '👁️' }}
+        </i>
         <div *ngIf="loginForm.controls['password']?.invalid && loginForm.controls['password']?.touched" class="error">
           <small *ngIf="loginForm.controls['password']?.hasError('required')">La contraseña es obligatoria</small>
-          <small *ngIf="loginForm.controls['password']?.hasError('minlength')">La contraseña debe de ser de al menos 6 digitos</small>
+          <small *ngIf="loginForm.controls['password']?.hasError('minlength')">La contraseña debe de ser de al menos 6 dígitos</small>
         </div>
       </div>
 
-      <button type="submit" [disabled]="loginForm.invalid">Log In</button>
+      <button type="submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
 
       <div class="register">
         <p>¿No tienes ya una cuenta? <a routerLink="/register">Registrarse</a></p>

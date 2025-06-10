@@ -14,11 +14,12 @@ import Swal from 'sweetalert2';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  verPassword: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router // ✅ Aseguramos que Router esté disponible
+    private router: Router
   ) {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
