@@ -9,7 +9,7 @@
       <div *ngFor="let piloto of pilotos" class="card" (click)="abrirPopup('piloto', piloto)">
         <img [src]="piloto.bandera" alt="bandera" width="30" />
         <p><strong>{{ piloto.nombre }}</strong></p>
-        <p>{{ piloto.precio | currency }}</p>
+        <p>{{ piloto.precio | number:'1.2-2' }} €</p>
         <p><Strong>{{ piloto.puntos_totales}}</Strong> pts</p>
       </div>
     </div>
@@ -20,7 +20,7 @@
       <div *ngFor="let copiloto of copilotos" class="card" (click)="abrirPopup('copiloto', copiloto)">
         <img [src]="copiloto.bandera" alt="bandera" width="30" />
         <p><strong>{{ copiloto.nombre }}</strong></p>
-        <p>{{ copiloto.precio | currency }}</p>
+        <p>{{ copiloto.precio | number:'1.2-2' }} €</p>
         <p><Strong>{{ copiloto.puntos_totales}}</Strong> pts</p>
       </div>
     </div>
@@ -31,7 +31,7 @@
       <div *ngFor="let coche of coches" class="card" (click)="abrirPopup('coche', coche)">
         <img [src]="coche.imagen" alt="coche" width="100" />
         <p><strong>{{ coche.modelo }}</strong></p>
-        <p>{{ coche.precio | currency }}</p>
+        <p>{{ coche.precio | number:'1.2-2' }} €</p>
         <p><Strong>{{ coche.puntos_totales}}</Strong> pts</p>
       </div>
     </div>

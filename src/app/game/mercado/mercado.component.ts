@@ -53,18 +53,17 @@ export class MercadoComponent implements OnInit {
   }
 
   comprar() {
-    if (this.elementoSeleccionado && this.tipoSeleccionado) {
-      this.rallyService.comprarElemento(this.tipoSeleccionado, this.elementoSeleccionado.id).subscribe({
-        next: (data) => {
-          Swal.fire({
-            title: data.mensaje,
-            icon: "success",
-            timer: 1000,
-            showConfirmButton: false,
-            draggable: true
-          });
-          
-                  
+  if (this.elementoSeleccionado && this.tipoSeleccionado) {
+    this.rallyService.comprarElemento(this.tipoSeleccionado, this.elementoSeleccionado.id).subscribe({
+      next: (data) => {
+        Swal.fire({
+          title: data.mensaje,
+          icon: "success",
+          timer: 1000,
+          showConfirmButton: false,
+          draggable: true
+        });
+
         switch (this.tipoSeleccionado) {
           case 'piloto':
             this.rallyService.getPilotos().subscribe(data => this.pilotos = data);
@@ -77,16 +76,23 @@ export class MercadoComponent implements OnInit {
             break;
         }
 
-          this.cerrarPopup();
-          this.cargarPresupuesto();
-        },
-        error: (err) => {
-          console.error('Error al comprar:', err);
-          alert('No se pudo realizar la compra.');
-        }
-      });
-    }
+        this.cerrarPopup();
+        this.cargarPresupuesto();
+      },
+      error: (err) => {
+        console.error('Error al comprar:', err);
+        const mensaje = err?.error?.error || 'Error desconocido al intentar comprar.';
+        Swal.fire({
+          title: 'Error',
+          text: mensaje,
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    });
   }
+}
+
 
   cargarMercadoFiltrado() {
     // Primero obtenemos los elementos del equipo del usuario
