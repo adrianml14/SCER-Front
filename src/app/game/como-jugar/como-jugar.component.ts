@@ -9,5 +9,10 @@ import { RouterModule } from '@angular/router';
   styleUrl: './como-jugar.component.css'
 })
 export class ComoJugarComponent {
-
+scrollTo(id: string) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 }

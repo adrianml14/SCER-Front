@@ -1,0 +1,54 @@
+.contenedor-tutorial {
+  display: flex;
+  gap: 30px;
+  padding: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.navegacion-tutorial {
+  flex: 0.3;
+  border-right: 1px solid #ccc;
+  padding-right: 20px;
+}
+
+.navegacion-tutorial ul {
+  list-style: none;
+  padding: 0;
+}
+
+.navegacion-tutorial li {
+  margin-bottom: 15px;
+}
+
+.navegacion-tutorial a {
+  cursor: pointer;
+  color: #a548da;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.navegacion-tutorial a:hover {
+  color: #6f2bbf;
+}
+
+.contenido-tutorial {
+  flex: 0.7;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.contenido-tutorial section h2,
+.contenido-tutorial section h3 {
+  color: #a548da;
+  margin-bottom: 10px;
+}
+
+.contenido-tutorial section {
+  background-color: #B0E4E6;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
