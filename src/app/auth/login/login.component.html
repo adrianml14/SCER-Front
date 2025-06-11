@@ -1,40 +1,60 @@
 <body>
+  <!-- Selector de idioma -->
+  <div class="lang-toggle">
+    <mat-button-toggle-group [value]="selectedLang" (change)="changeLanguage($event.value)">
+      <mat-button-toggle value="es">ES</mat-button-toggle>
+      <mat-button-toggle value="en">EN</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <!-- Contenedor del login -->
   <div class="wrapper">
-
-
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <h2>Iniciar Sesión</h2>
+      <h2>{{ 'login.title' | translate }}</h2>
 
-      <!-- Username field -->
+      <!-- Username -->
       <div class="input-field">
         <input formControlName="username" type="text" required />
-        <label>Nombre de usuario</label>
-        <div *ngIf="loginForm.controls['username']?.invalid && loginForm.controls['username']?.touched" class="error">
-          <small *ngIf="loginForm.controls['username']?.hasError('required')">El nombre de usuario es obligatorio</small>
+        <label>{{ 'login.usernameLabel' | translate }}</label>
+        <div *ngIf="loginForm.controls['username']?.invalid && loginForm.controls['username']?.touched">
+          <small *ngIf="loginForm.controls['username']?.hasError('required')">
+            {{ 'login.usernameRequired' | translate }}
+          </small>
         </div>
       </div>
 
-      <!-- Password field -->
+      <!-- Password -->
       <div class="input-field password-field">
         <input
           [type]="verPassword ? 'text' : 'password'"
           formControlName="password"
           required
         />
-        <label>Contraseña</label>
+        <label>{{ 'login.passwordLabel' | translate }}</label>
         <i (click)="verPassword = !verPassword" class="toggle-password">
           {{ verPassword ? '🙈' : '👁️' }}
         </i>
-        <div *ngIf="loginForm.controls['password']?.invalid && loginForm.controls['password']?.touched" class="error">
-          <small *ngIf="loginForm.controls['password']?.hasError('required')">La contraseña es obligatoria</small>
-          <small *ngIf="loginForm.controls['password']?.hasError('minlength')">La contraseña debe de ser de al menos 6 dígitos</small>
+        <div *ngIf="loginForm.controls['password']?.invalid && loginForm.controls['password']?.touched">
+          <small *ngIf="loginForm.controls['password']?.hasError('required')">
+            {{ 'login.passwordRequired' | translate }}
+          </small>
+          <small *ngIf="loginForm.controls['password']?.hasError('minlength')">
+            {{ 'login.passwordMinLength' | translate }}
+          </small>
         </div>
       </div>
 
-      <button type="submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+      <!-- Submit -->
+      <button type="submit" [disabled]="loginForm.invalid">
+        {{ 'login.submit' | translate }}
+      </button>
 
+      <!-- Register link -->
       <div class="register">
-        <p>¿No tienes ya una cuenta? <a routerLink="/register">Registrarse</a></p>
+        <p>
+          {{ 'login.noAccount' | translate }}
+          <a routerLink="/register">{{ 'login.register' | translate }}</a>
+        </p>
       </div>
     </form>
   </div>

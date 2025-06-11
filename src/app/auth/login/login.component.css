@@ -4,6 +4,18 @@
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
 }
+.auth-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000 url("/assets/images/FondoLR.jpeg") no-repeat center center fixed;
+  background-size: cover;
+  z-index: -1;
+}
+
+
 body {
   display: flex;
   align-items: center;
@@ -20,12 +32,13 @@ body::before {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: url("/images/FondoLR.jpeg"), #000;
+  background: #000 url("/assets/images/FondoLR.jpeg") no-repeat center center fixed;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   z-index: -1;
 }
+
 .wrapper {
   position: fixed; 
   width: 400px;
@@ -139,3 +152,30 @@ button:hover {
 small{
   color: blueviolet;
 }
+
+.wrapper form {
+  position: relative;
+}
+
+.wrapper form h2 {
+  display: inline-block;
+  margin: 0;
+  line-height: 40px;
+}
+
+.lang-toggle {
+  position: absolute;
+  top: 14%;
+  transform: translateY(-50%);
+}
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+
+    .lang-toggle {
+    position: absolute;
+    right: 5%;
+    top: 30%;
+    transform: translateY(-50%);
+    }
+}
+

@@ -141,6 +141,23 @@ small{
   color: blueviolet;
 }
 
+.wrapper form {
+  position: relative;
+}
+
+.wrapper form h2 {
+  display: inline-block;
+  margin: 0;
+  line-height: 40px; /* Ajusta según el tamaño de tu toggle */
+}
+
+.lang-toggle {
+  position: absolute;
+  top: 14%;
+  transform: translateY(-50%);
+}
+
+
 
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body {
@@ -181,5 +198,12 @@ small{
   .register {
     margin-top: 20px;
     font-size: 14px;
+  }
+
+  .lang-toggle {
+  position: absolute;
+  right: 5%;
+  top: 30%;
+  transform: translateY(-50%);
   }
 }

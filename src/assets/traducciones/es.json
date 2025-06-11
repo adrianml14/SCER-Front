@@ -1,0 +1,73 @@
+{
+  "login": {
+    "title": "Iniciar Sesión",
+    "usernameLabel": "Nombre de usuario",
+    "usernameRequired": "El nombre de usuario es obligatorio",
+    "passwordLabel": "Contraseña",
+    "passwordRequired": "La contraseña es obligatoria",
+    "passwordMinLength": "La contraseña debe de ser de al menos 6 dígitos",
+    "submit": "Iniciar Sesión",
+    "noAccount": "¿No tienes ya una cuenta?",
+    "register": "Registrarse",
+    "successTitle": "Sesión Iniciada correctamente",
+    "csrfError": "No se pudo obtener el token CSRF. Por favor, recarga la página.",
+    "unknownError": "Ocurrió un error desconocido. Intenta de nuevo.",
+    "fillFields": "Por favor, completa todos los campos requeridos correctamente."
+  },
+  "register": {
+    "title": "Registrarse",
+    "usernameLabel": "Nombre de Usuario",
+    "usernameRequired": "El nombre de usuario es obligatorio",
+    "emailLabel": "Correo electrónico",
+    "emailRequired": "El correo electrónico es obligatorio",
+    "emailInvalid": "Ingrese un correo válido",
+    "passwordLabel": "Contraseña",
+    "passwordRequired": "La contraseña es obligatoria",
+    "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
+    "button": "Registrarse",
+    "alreadyAccount": "¿Ya tienes una cuenta?",
+    "loginLink": "Iniciar Sesión",
+    "invalidForm": {
+      "title": "Formulario inválido",
+      "text": "Completa todos los campos correctamente."
+    },
+    "successTitle": "¡Bienvenido {{username}}!",
+    "successText": "Tu cuenta fue creada correctamente.",
+    "errorTitle": "Error al registrar",
+    "autoLoginFailed": {
+      "title": "Login automático fallido",
+      "text": "Tu cuenta fue creada pero debes iniciar sesión manualmente."
+    }
+  },
+  "toolbar": {
+    "comoJugar": "Cómo jugar",
+    "miEquipo": "Mi Equipo",
+    "mercado": "Mercado",
+    "ligas": "Ligas",
+    "perfil": "Perfil"
+  },
+  "tutorial": {
+    "welcome": "¡Bienvenido nuevo Usuario!",
+    "intro1": "Te presento la SCER-League, el juego fantasy dedicado al Super Campeonato de España de Rallies.",
+    "intro2": "En esta explicación te enseñaré cómo jugar y avanzar hasta dominar esta disciplina.",
+    "functioningTitle": "Funcionamiento",
+    "functioningText1": "El funcionamiento base de la aplicación es simple, tienes un equipo, el que consideres mejor, y segun ese equipo y su rendimiento en la vida real en cada rally, obtendrás puntos por cada rally que pase.",
+    "functioningText2": "Para conseguir más dinero y tener un mejor equipo, se tiene que ganar dinero con la compra-venta de items, para asi conseguir beneficios.",
+    "teamTitle": "Mi Equipo",
+    "teamText1": "En este apartado podrás ver tu equipo, el cual empezará vacío y con un presupuesto de 500.000,00 €. Con esta cifra inicial debes contratar pilotos, copilotos y coches hasta formar el equipo que desees.",
+    "teamText2": "Sólo se pueden tener un máximo de 2 pilotos, 2 copilotos y un coche, así que elige bien tu equipo.",
+    "teamText3": "También podrás ver y editar el nombre de tu equipo, además de comprobar los puntos obtenidos en los rallies ya finalizados.",
+    "marketTitle": "Mercado",
+    "marketText1": "Aquí podrás ver y comprar a todos los pilotos, copilotos y coches. Cada uno tiene un precio individual en función de su rendimiento durante la temporada.",
+    "marketText2": "Recuerda que tienes un presupuesto que no debes sobrepasar.",
+    "marketText3": "Cuando seleccionas un ítem, te aparecerá la opción de comprarlo o ver su historial de rendimiento.",
+    "leaguesTitle": "Ligas",
+    "leaguesText1": "En las ligas podrás ver tu clasificación en la liga general y en ligas privadas. La liga general es global, mientras que las privadas sólo contienen a quienes se han unido.",
+    "leaguesText2": "Los usuarios estándar solo pueden unirse a una liga, mientras que los VIP pueden crear y unirse a otra.",
+    "leaguesText3": "Para unirte a una liga privada necesitas el código proporcionado por su creador.",
+    "profileTitle": "Perfil",
+    "profileText1": "En el perfil verás tu información: correo, nombre de usuario, rol individual y nombre de tu equipo.",
+    "profileText2": "Puedes cambiar el nombre del equipo, reportar bugs y convertirte en usuario VIP o administrador (con contraseña).",
+    "profileText3": "Los administradores pueden gestionar bugs reportados por otros usuarios."
+  }
+}

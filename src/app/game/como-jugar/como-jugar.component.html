@@ -2,54 +2,54 @@
   <!-- Navegación lateral -->
   <div class="navegacion-tutorial">
     <ul>
-      <li><a (click)="scrollTo('funcionamiento')">Funcionamiento</a></li>
-      <li><a (click)="scrollTo('equipo')">Mi Equipo</a></li>
-      <li><a (click)="scrollTo('mercado')">Mercado</a></li>
-      <li><a (click)="scrollTo('ligas')">Ligas</a></li>
-      <li><a (click)="scrollTo('perfil')">Perfil</a></li>
+      <li><a (click)="scrollTo('funcionamiento')">{{ 'toolbar.comoJugar' | translate }}</a></li>
+      <li><a (click)="scrollTo('equipo')">{{ 'toolbar.miEquipo' | translate }}</a></li>
+      <li><a (click)="scrollTo('mercado')">{{ 'toolbar.mercado' | translate }}</a></li>
+      <li><a (click)="scrollTo('ligas')">{{ 'toolbar.ligas' | translate }}</a></li>
+      <li><a (click)="scrollTo('perfil')">{{ 'toolbar.perfil' | translate }}</a></li>
     </ul>
   </div>
 
   <!-- Contenido del tutorial -->
   <div class="contenido-tutorial">
     <section id="bienvenida">
-      <h2>¡Bienvenido nuevo Usuario!</h2>
-      <p>Te presento la SCER-League, el juego fantasy dedicado al Super Campeonato de España de Rallies.</p>
-      <p>En esta explicación te enseñaré cómo jugar y avanzar hasta dominar esta disciplina.</p>
+      <h2>{{ 'tutorial.welcome' | translate }}</h2>
+      <p>{{ 'tutorial.intro1' | translate }}</p>
+      <p>{{ 'tutorial.intro2' | translate }}</p>
     </section>
 
     <section id="funcionamiento">
-      <h3>Funcionamiento</h3>
-      <p>El funcionamiento base de la aplicación es simple, tienes un equipo, el que consideres mejor, y segun ese equipo y su rendimiento en la vida real en cada rally, obtendrás puntos por cada rally que pase.</p>
-      <p>Para conseguir más dinero y tener un mejor equipo, se tiene que ganar dinero con la compra-venta de items, para asi conseguir beneficios.</p>
+      <h3>{{ 'tutorial.functioningTitle' | translate }}</h3>
+      <p>{{ 'tutorial.functioningText1' | translate }}</p>
+      <p>{{ 'tutorial.functioningText2' | translate }}</p>
     </section>
 
     <section id="equipo">
-      <h3>Mi Equipo</h3>
-      <p>En este apartado podrás ver tu equipo, el cual empezará vacío y con un presupuesto de 500.000,00 €. Con esta cifra inicial debes contratar pilotos, copilotos y coches hasta formar el equipo que desees.</p>
-      <p>Sólo se pueden tener un máximo de 2 pilotos, 2 copilotos y un coche, así que elige bien tu equipo.</p>
-      <p>También podrás ver y editar el nombre de tu equipo, además de comprobar los puntos obtenidos en los rallies ya finalizados.</p>
+      <h3>{{ 'tutorial.teamTitle' | translate }}</h3>
+      <p>{{ 'tutorial.teamText1' | translate }}</p>
+      <p>{{ 'tutorial.teamText2' | translate }}</p>
+      <p>{{ 'tutorial.teamText3' | translate }}</p>
     </section>
 
     <section id="mercado">
-      <h3>Mercado</h3>
-      <p>Aquí podrás ver y comprar a todos los pilotos, copilotos y coches. Cada uno tiene un precio individual en función de su rendimiento durante la temporada.</p>
-      <p>Recuerda que tienes un presupuesto que no debes sobrepasar.</p>
-      <p>Cuando seleccionas un ítem, te aparecerá la opción de comprarlo o ver su historial de rendimiento.</p>
+      <h3>{{ 'tutorial.marketTitle' | translate }}</h3>
+      <p>{{ 'tutorial.marketText1' | translate }}</p>
+      <p>{{ 'tutorial.marketText2' | translate }}</p>
+      <p>{{ 'tutorial.marketText3' | translate }}</p>
     </section>
 
     <section id="ligas">
-      <h3>Ligas</h3>
-      <p>En las ligas podrás ver tu clasificación en la liga general y en ligas privadas. La liga general es global, mientras que las privadas sólo contienen a quienes se han unido.</p>
-      <p>Los usuarios estándar solo pueden unirse a una liga, mientras que los VIP pueden crear y unirse a otra.</p>
-      <p>Para unirte a una liga privada necesitas el código proporcionado por su creador.</p>
+      <h3>{{ 'tutorial.leaguesTitle' | translate }}</h3>
+      <p>{{ 'tutorial.leaguesText1' | translate }}</p>
+      <p>{{ 'tutorial.leaguesText2' | translate }}</p>
+      <p>{{ 'tutorial.leaguesText3' | translate }}</p>
     </section>
 
     <section id="perfil">
-      <h3>Perfil</h3>
-      <p>En el perfil verás tu información: correo, nombre de usuario, rol individual y nombre de tu equipo.</p>
-      <p>Puedes cambiar el nombre del equipo, reportar bugs y convertirte en usuario VIP o administrador (con contraseña).</p>
-      <p>Los administradores pueden gestionar bugs reportados por otros usuarios.</p>
+      <h3>{{ 'tutorial.profileTitle' | translate }}</h3>
+      <p>{{ 'tutorial.profileText1' | translate }}</p>
+      <p>{{ 'tutorial.profileText2' | translate }}</p>
+      <p>{{ 'tutorial.profileText3' | translate }}</p>
     </section>
   </div>
 </div>

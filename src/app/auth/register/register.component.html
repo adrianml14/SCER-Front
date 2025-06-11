@@ -1,57 +1,67 @@
 <body>
-  <div class="wrapper">
+      <!-- Language selector -->
+    <mat-button-toggle-group [value]="selectedLang" (change)="changeLanguage($event.value)" class="lang-toggle">
+      <mat-button-toggle value="es">ES</mat-button-toggle>
+      <mat-button-toggle value="en">EN</mat-button-toggle>
+    </mat-button-toggle-group>
+  
+    <div class="wrapper">
+
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <h2>Registrarse</h2>
-      
+      <h2>{{ 'register.title' | translate }}</h2>
+
       <!-- Username Field -->
-      <div class="input-field" [class.invalid]="registerForm.controls['username'].invalid && registerForm.controls['username'].touched">
+      <div class="input-field" [class.invalid]="isInvalid('username')">
         <input type="text" formControlName="username" required />
-        <label>Nombre de Usuario</label>
-        <div *ngIf="registerForm.controls['username'].invalid && registerForm.controls['username'].touched" class="error">
-          <small *ngIf="registerForm.controls['username'].hasError('required')">El nombre de usuario es obligatorio</small>
+        <label>{{ 'register.usernameLabel' | translate }}</label>
+        <div *ngIf="isInvalid('username')" class="error">
+          <small *ngIf="registerForm.controls['username'].hasError('required')">
+            {{ 'register.usernameRequired' | translate }}
+          </small>
         </div>
       </div>
 
       <!-- Email Field -->
-      <div class="input-field" [class.invalid]="registerForm.controls['email'].invalid && registerForm.controls['email'].touched">
+      <div class="input-field" [class.invalid]="isInvalid('email')">
         <input type="text" formControlName="email" required />
-        <label>Correo electronico</label>
-        <div *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched" class="error">
-          <small *ngIf="registerForm.controls['email'].hasError('required')">El correo electronico es obligatorio</small>
-          <small *ngIf="registerForm.controls['email'].hasError('email')">Ingrese un correo valido</small>
+        <label>{{ 'register.emailLabel' | translate }}</label>
+        <div *ngIf="isInvalid('email')" class="error">
+          <small *ngIf="registerForm.controls['email'].hasError('required')">
+            {{ 'register.emailRequired' | translate }}
+          </small>
+          <small *ngIf="registerForm.controls['email'].hasError('email')">
+            {{ 'register.emailInvalid' | translate }}
+          </small>
         </div>
       </div>
 
       <!-- Password Field -->
-      <div class="input-field" [class.invalid]="registerForm.controls['password'].invalid && registerForm.controls['password'].touched">
-        <input type="password" formControlName="password" required />
-                <input
-          [type]="verPassword ? 'text' : 'password'"
-          formControlName="password"
-          required
-        />
-        <label>Contraseña</label>
+      <div class="input-field" [class.invalid]="isInvalid('password')">
+        <input [type]="verPassword ? 'text' : 'password'" formControlName="password" required />
+        <label>{{ 'register.passwordLabel' | translate }}</label>
         <i (click)="verPassword = !verPassword" class="toggle-password">
           {{ verPassword ? '🙈' : '👁️' }}
         </i>
-        <div *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched" class="error">
-          <small *ngIf="registerForm.controls['password'].hasError('required')">La contraseña es obligatoria</small>
-          <small *ngIf="registerForm.controls['password'].hasError('minlength')">La contraseña debe de ser de al menos 6 digitos</small>
+        <div *ngIf="isInvalid('password')" class="error">
+          <small *ngIf="registerForm.controls['password'].hasError('required')">
+            {{ 'register.passwordRequired' | translate }}
+          </small>
+          <small *ngIf="registerForm.controls['password'].hasError('minlength')">
+            {{ 'register.passwordMinLength' | translate }}
+          </small>
         </div>
       </div>
 
-      <!-- Register Button -->
-      <button type="submit" [disabled]="registerForm.invalid">Registrarse</button>
+      <button type="submit" [disabled]="registerForm.invalid">
+        {{ 'register.button' | translate }}
+      </button>
 
-      <!-- Link to Login -->
       <div class="register">
-        <p>¿Ya tienes una cuenta? <a routerLink="/login">Iniciar Sesión</a></p>
+        <p>
+          {{ 'register.alreadyAccount' | translate }}
+          <a routerLink="/login">{{ 'register.loginLink' | translate }}</a>
+        </p>
       </div>
     </form>
   </div>
 </body>
-
-
-
-
-<!-- revisar, si no tocas los campos antes de darle a registrar, no sale cuales son los que no rellenaste -->

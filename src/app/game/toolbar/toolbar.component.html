@@ -1,18 +1,32 @@
 <mat-toolbar>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"  routerLink="/login">
-      <mat-icon>logout</mat-icon>
-    </button>
+  <button mat-icon-button class="example-icon" aria-label="Cerrar sesión" routerLink="/login">
+    <mat-icon>logout</mat-icon>
+  </button>
 
-    <mat-button-toggle-group class="navbar-option">
-        <mat-button-toggle routerLink="/game/mi-equipo">Mi Equipo</mat-button-toggle>
-        <mat-button-toggle routerLink="/game/mercado">Mercado</mat-button-toggle>
-        <mat-button-toggle routerLink="/game/ligas">Ligas</mat-button-toggle>
-        <mat-button-toggle routerLink="/game/como-jugar">Cómo Jugar</mat-button-toggle>
-    </mat-button-toggle-group>
+  <mat-button-toggle-group class="navbar-option" [value]="null">
+    <mat-button-toggle routerLink="/game/mi-equipo">{{ 'toolbar.miEquipo' | translate }}</mat-button-toggle>
+    <mat-button-toggle routerLink="/game/mercado">{{ 'toolbar.mercado' | translate }}</mat-button-toggle>
+    <mat-button-toggle routerLink="/game/ligas">{{ 'toolbar.ligas' | translate }}</mat-button-toggle>
+    <mat-button-toggle routerLink="/game/como-jugar">{{ 'toolbar.comoJugar' | translate }}</mat-button-toggle>
+  </mat-button-toggle-group>
 
-    <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" routerLink="/account/perfil">
-      <mat-icon>person</mat-icon>
-    </button>
+  <span class="example-spacer"></span>
 
-  </mat-toolbar>
+  <!-- Selector idioma -->
+  <mat-button-toggle-group
+    [value]="selectedLang"
+    (change)="changeLanguage($event.value)"
+  >
+    <mat-button-toggle value="es">ES</mat-button-toggle>
+    <mat-button-toggle value="en">EN</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <button
+    mat-icon-button
+    class="example-icon favorite-icon"
+    aria-label="Perfil usuario"
+    routerLink="/account/perfil"
+  >
+    <mat-icon>person</mat-icon>
+  </button>
+</mat-toolbar>

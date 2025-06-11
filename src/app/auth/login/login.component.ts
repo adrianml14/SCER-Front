@@ -4,12 +4,23 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+
+// Importa módulos de traducción
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, MatIconModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatIconModule,
+    TranslateModule,
+    MatButtonToggleModule
+  ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -17,17 +28,24 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errorMessage: string = '';
   verPassword: boolean = false;
+  selectedLang = 'es';
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
     console.log("LoginComponent constructor llamado");
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+
+    // Detectar idioma navegador o usar 'es' por defecto
+    const browserLang = translate.getBrowserLang();
+    this.selectedLang = browserLang && ['es', 'en'].includes(browserLang) ? browserLang : 'es';
+    this.translate.use(this.selectedLang);
   }
 
   ngOnInit(): void {
@@ -38,9 +56,14 @@ export class LoginComponent implements OnInit {
       next: () => console.log('✅ CSRF cookie establecida correctamente.'),
       error: err => {
         console.error('❌ Error al obtener CSRF cookie:', err);
-        this.errorMessage = 'Error al obtener token CSRF';
+        this.errorMessage = this.translate.instant('login.csrfError') || 'Error al obtener token CSRF';
       }
     });
+  }
+
+  changeLanguage(lang: string) {
+    this.selectedLang = lang;
+    this.translate.use(lang);
   }
 
   getCookie(name: string): string | null {
@@ -64,7 +87,7 @@ export class LoginComponent implements OnInit {
       const csrfToken = this.getCookie('csrftoken');
       if (!csrfToken) {
         console.error('No se pudo obtener el token CSRF');
-        this.errorMessage = 'No se pudo obtener el token CSRF. Intenta recargar la página.';
+        this.errorMessage = this.translate.instant('login.csrfError') || 'No se pudo obtener el token CSRF. Intenta recargar la página.';
         return;
       }
 
@@ -86,30 +109,29 @@ export class LoginComponent implements OnInit {
         next: (response: any) => {
           console.log('Respuesta del servidor:', response);
           if (response && response.message === 'Login exitoso') {
-            console.log('✅ Login exitoso');
             Swal.fire({
-              title: "Login correcto",
+              title: this.translate.instant('login.successTitle') || "Login correcto",
               icon: "success",
               timer: 1000,
               showConfirmButton: false,
               draggable: true,
-                didClose: () => {
-                  this.router.navigate(['/game/mi-equipo']);
-                }
+              didClose: () => {
+                this.router.navigate(['/game/mi-equipo']);
+              }
             });
           } else {
             console.log('Error en la respuesta del servidor:', response.message);
-            this.errorMessage = response.message || 'Error desconocido';
+            this.errorMessage = response.message || this.translate.instant('login.unknownError') || 'Error desconocido';
           }
         },
         error: (err) => {
           console.error('❌ Error en el login:', err);
-          this.errorMessage = err.error?.message || 'Error desconocido';
+          this.errorMessage = err.error?.message || this.translate.instant('login.unknownError') || 'Error desconocido';
         }
       });
     } else {
       console.log("Formulario inválido");
-      this.errorMessage = 'Por favor, completa los campos correctamente.';
+      this.errorMessage = this.translate.instant('login.fillFields') || 'Por favor, completa los campos correctamente.';
     }
   }
 }

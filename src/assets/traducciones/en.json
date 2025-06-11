@@ -1,0 +1,73 @@
+{
+  "login": {
+    "title": "Log In",
+    "usernameLabel": "Username",
+    "usernameRequired": "Username is required",
+    "passwordLabel": "Password",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password must be at least 6 characters",
+    "submit": "Log In",
+    "noAccount": "Don't have an account?",
+    "register": "Register",
+    "successTitle": "Successful Login",
+    "csrfError": "Unable to get CSRF token. Please reload the page.",
+    "unknownError": "An unknown error occurred. Please try again.",
+    "fillFields": "Please fill in all required fields correctly."
+  },
+  "register": {
+    "title": "Register",
+    "usernameLabel": "Username",
+    "usernameRequired": "Username is required",
+    "emailLabel": "Email",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Enter a valid email",
+    "passwordLabel": "Password",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password must be at least 6 characters",
+    "button": "Register",
+    "alreadyAccount": "Already have an account?",
+    "loginLink": "Log In",
+    "invalidForm": {
+      "title": "Invalid Form",
+      "text": "Please complete all fields correctly."
+    },
+    "successTitle": "Welcome {{username}}!",
+    "successText": "Your account was created successfully.",
+    "errorTitle": "Registration Error",
+    "autoLoginFailed": {
+      "title": "Auto-login Failed",
+      "text": "Your account was created but you must log in manually."
+    }
+  },
+  "toolbar": {
+    "comoJugar": "How to Play",
+    "miEquipo": "My Team",
+    "mercado": "Market",
+    "ligas": "Leagues",
+    "perfil": "Profile"
+  },
+  "tutorial": {
+    "welcome": "Welcome New User!",
+    "intro1": "Let me introduce you to SCER-League, the fantasy game dedicated to the Spanish Rally Championship.",
+    "intro2": "In this explanation, I will teach you how to play and progress until you master this discipline.",
+    "functioningTitle": "How It Works",
+    "functioningText1": "The basic functionality of the application is simple: you have a team — the one you consider best — and based on that team and its real-life performance in each rally, you will earn points for every completed rally.",
+    "functioningText2": "To earn more money and build a better team, you must profit from buying and selling items.",
+    "teamTitle": "My Team",
+    "teamText1": "In this section, you can see your team, which starts empty with a budget of €500,000.00. With this amount, you must hire drivers, co-drivers, and cars to form the team you want.",
+    "teamText2": "You can only have a maximum of 2 drivers, 2 co-drivers, and 1 car, so choose your team wisely.",
+    "teamText3": "You can also view and edit your team name, and check the points earned in completed rallies.",
+    "marketTitle": "Market",
+    "marketText1": "Here you can view and buy all drivers, co-drivers, and cars. Each has an individual price based on their performance throughout the season.",
+    "marketText2": "Remember you have a budget you must not exceed.",
+    "marketText3": "When you select an item, you’ll have the option to buy it or view its performance history.",
+    "leaguesTitle": "Leagues",
+    "leaguesText1": "In the leagues section, you can see your ranking in the general and private leagues. The general league is global, while private ones contain only invited users.",
+    "leaguesText2": "Standard users can only join one league, while VIP users can create and join an additional one.",
+    "leaguesText3": "To join a private league, you need the code provided by its creator.",
+    "profileTitle": "Profile",
+    "profileText1": "In the profile section, you’ll see your information: email, username, user role, and team name.",
+    "profileText2": "You can change your team name, report bugs, and become a VIP user or administrator (with a password).",
+    "profileText3": "Administrators can manage bugs reported by other users."
+  }
+}
