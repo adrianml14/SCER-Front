@@ -2,46 +2,50 @@
   <!--  MITAD IZQUIERDA: Ligas -->
   <div style="flex: 1.5;">
     <div>
-      <button *ngIf="esVIP" (click)="abrirPopupCrearLiga()" class="crearLiga">Crear Liga</button>
+      <button *ngIf="esVIP" (click)="abrirPopupCrearLiga()" class="crearLiga">
+        {{ 'leagues.createLeague' | translate }}
+      </button>
     </div>
 
     <!-- Mostrar todas las ligas -->
     <div *ngIf="todasLigas.length > 0" class="ligasPrivadas">
-      <h3>Ligas Privadas</h3>
+      <h3>{{ 'leagues.privateLeagues' | translate }}</h3>
       <div class="liga-fila" *ngFor="let liga of todasLigas">
         <div class="liga-info">
           <span>{{ liga.nombre }}</span>
-          <span><strong>Dueño:</strong> {{ liga["dueño"] }}</span>
-          <span><strong>Participantes:</strong> {{ liga.num_participantes }}</span>
+          <span><strong>{{ 'leagues.owner' | translate }}:</strong> {{ liga["dueño"] }}</span>
+          <span><strong>{{ 'leagues.participants' | translate }}:</strong> {{ liga.num_participantes }}</span>
           <span *ngIf="liga.codigo_unico">
-            <strong>Código:</strong> {{ liga.codigo_unico }}
+            <strong>{{ 'leagues.code' | translate }}:</strong> {{ liga.codigo_unico }}
           </span>
         </div>
 
         <div class="buttonsLeague">
-          <button class="btn-inspeccionar" (click)="irADetalleLiga(liga)">Inspeccionar</button>
-        <button
-          class="btn-unirse"
-          *ngIf="liga['dueño'] !== usuarioUsername"
-          (click)="liga.soyParticipante ? dejarLiga(liga.id) : mostrarPopupUnirse(liga)">
-          {{ liga.soyParticipante ? 'Dejar liga' : 'Unirse' }}
-        </button>
+          <button class="btn-inspeccionar" (click)="irADetalleLiga(liga)">
+            {{ 'leagues.inspect' | translate }}
+          </button>
+          <button
+            class="btn-unirse"
+            *ngIf="liga['dueño'] !== usuarioUsername"
+            (click)="liga.soyParticipante ? dejarLiga(liga.id) : mostrarPopupUnirse(liga)">
+            {{ liga.soyParticipante ? ('leagues.leave' | translate) : ('leagues.join' | translate) }}
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-   <!-- Separador -->
+  <!-- Separador -->
   <div class="vertical-divider"></div>
 
   <!--  MITAD DERECHA: Clasificación General -->
   <div style="flex: 1;" class="ligaGeneral">
-    <h3>Clasificación General</h3>
+    <h3>{{ 'leagues.generalRanking' | translate }}</h3>
     <div *ngIf="clasificacionGeneral.length > 0; else sinDatos">
       <div *ngFor="let user of clasificacionGeneral; index as i" class="tarjeta-ranking">
         <div class="posicion">{{ i + 1 }}</div>
         <div class="info-usuario">
-          <img [src]="user.bandera?.imagen_url" alt="Bandera" width="40" height="25" *ngIf="user.bandera">
+          <img [src]="user.bandera?.imagen_url" alt="Bandera" width="40" height="25" *ngIf="user.bandera" />
           <div class="nombre">{{ user.usuario }}</div>
           <div class="nombre_equipo">{{ user.equipo_nombre }}</div>
           <div class="puntos">{{ user.puntos_totales }} pts</div>
@@ -49,7 +53,7 @@
       </div>
     </div>
     <ng-template #sinDatos>
-      <p>No hay datos disponibles.</p>
+      <p>{{ 'leagues.noData' | translate }}</p>
     </ng-template>
   </div>
 </div>
@@ -58,16 +62,16 @@
 <div class="overlay" *ngIf="mostrarPopup" (click)="cerrarPopup()">
   <div class="popup" (click)="$event.stopPropagation()">
     <ng-container *ngIf="tipoPopup === 'crear'">
-      <h3>Crear Liga</h3>
-      <input type="text" [(ngModel)]="nombreNuevaLiga" placeholder="Nombre de la liga" />
-      <button (click)="crearLiga()">Crear</button>
+      <h3>{{ 'leagues.createLeaguePopup' | translate }}</h3>
+      <input type="text" [(ngModel)]="nombreNuevaLiga" [placeholder]="'leagues.leagueNamePlaceholder' | translate" />
+      <button (click)="crearLiga()">{{ 'leagues.create' | translate }}</button>
     </ng-container>
 
     <ng-container *ngIf="tipoPopup === 'unirse'">
-      <h3>Unirse a la Liga</h3>
+      <h3>{{ 'leagues.joinLeague' | translate }}</h3>
       <p><strong>{{ ligaIdParaUnirse?.nombre }}</strong></p>
-      <input type="text" [(ngModel)]="codigoUnirse" placeholder="Código de la liga" />
-      <button (click)="unirseConCodigo()">Unirse</button>
+      <input type="text" [(ngModel)]="codigoUnirse" [placeholder]="'leagues.codePlaceholder' | translate" />
+      <button (click)="unirseConCodigo()">{{ 'leagues.joinAction' | translate }}</button>
     </ng-container>
   </div>
 </div>

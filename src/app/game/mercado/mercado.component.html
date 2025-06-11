@@ -1,44 +1,54 @@
+<!-- Presupuesto -->
 <div class="presupuesto-info" *ngIf="presupuesto !== null">
-  <p>Presupuesto disponible: <strong>{{ presupuesto | currency:'EUR' }} </strong></p>
+  <p>
+    {{ 'market.budgetAvailable' | translate }}:
+    <strong>{{ presupuesto | currency:'EUR' }}</strong>
+  </p>
 </div>
 
-
+<!-- Tabs de mercado -->
 <mat-tab-group animationDuration="500ms">
-  <mat-tab label="Pilotos">
+  <mat-tab label="{{ 'market.drivers' | translate }}">
     <div class="grid-container">
       <div *ngFor="let piloto of pilotos" class="card" (click)="abrirPopup('piloto', piloto)">
         <img [src]="piloto.bandera" alt="bandera" width="30" />
         <p><strong>{{ piloto.nombre }}</strong></p>
         <p>{{ piloto.precio | number:'1.2-2' }} €</p>
         <div class="puntos">
-          <p class="pts"><Strong class="puntosStrong">{{ piloto.puntos_totales}}</Strong> pts</p>
+          <p class="pts">
+            <strong class="puntosStrong">{{ piloto.puntos_totales }}</strong> pts
+          </p>
         </div>
       </div>
     </div>
   </mat-tab>
 
-  <mat-tab label="Copilotos">
+  <mat-tab label="{{ 'market.codrivers' | translate }}">
     <div class="grid-container">
       <div *ngFor="let copiloto of copilotos" class="card" (click)="abrirPopup('copiloto', copiloto)">
         <img [src]="copiloto.bandera" alt="bandera" width="30" />
         <p><strong>{{ copiloto.nombre }}</strong></p>
         <p>{{ copiloto.precio | number:'1.2-2' }} €</p>
-          <div class="puntos">
-            <p class="pts"><Strong class="puntosStrong">{{ copiloto.puntos_totales}}</Strong> pts</p>
-          </div>
+        <div class="puntos">
+          <p class="pts">
+            <strong class="puntosStrong">{{ copiloto.puntos_totales }}</strong> pts
+          </p>
+        </div>
       </div>
     </div>
   </mat-tab>
 
-  <mat-tab label="Coches">
+  <mat-tab label="{{ 'market.cars' | translate }}">
     <div class="grid-container">
       <div *ngFor="let coche of coches" class="card" (click)="abrirPopup('coche', coche)">
         <img [src]="coche.imagen" alt="coche" width="100" />
         <p><strong>{{ coche.modelo }}</strong></p>
         <p>{{ coche.precio | number:'1.2-2' }} €</p>
-          <div class="puntos">
-            <p class="pts"> <Strong class="puntosStrong">{{ coche.puntos_totales}}</Strong> pts</p>
-          </div>
+        <div class="puntos">
+          <p class="pts">
+            <strong class="puntosStrong">{{ coche.puntos_totales }}</strong> pts
+          </p>
+        </div>
       </div>
     </div>
   </mat-tab>
@@ -50,25 +60,31 @@
     <img [src]="elementoSeleccionado.bandera || elementoSeleccionado.imagen" width="60" />
     <p><strong>{{ elementoSeleccionado.nombre || elementoSeleccionado.modelo }}</strong></p>
     <p>{{ elementoSeleccionado.precio | number:'1.2-2' }} €</p>
-    <button *ngIf="tipoSeleccionado === 'coche'" (click)="comprar()">Comprar</button>
-    <button *ngIf="tipoSeleccionado !== 'coche'" (click)="comprar()">Contratar</button>
-    <button (click)="cargarHistorialElemento()">Ver historial</button>
 
-    <!-- Historial desplegable -->
+    <button *ngIf="tipoSeleccionado === 'coche'" (click)="comprar()">
+      {{ 'market.buy' | translate }}
+    </button>
+    <button *ngIf="tipoSeleccionado !== 'coche'" (click)="comprar()">
+      {{ 'market.hire' | translate }}
+    </button>
+    <button (click)="cargarHistorialElemento()">
+      {{ 'market.viewHistory' | translate }}
+    </button>
+
+    <!-- Historial -->
     <div *ngIf="mostrarHistorial && historialElemento.length > 0" class="historial-box">
-      <h4>Historial</h4>
+      <h4>{{ 'market.history' | translate }}</h4>
       <div *ngFor="let item of historialElemento" class="historial-item">
-        <p><strong>Rally:</strong> {{ item.rally_nombre }}</p>
-        <p><strong>Equipo:</strong> {{ item.equipo }}</p>
-        <p><strong>Posición:</strong> {{ item.posicion !== null ? item.posicion : 'Fuera del TOP10' }}</p>
-        <p><strong>Puntos:</strong> {{ item.puntos }}</p>
+        <p><strong>{{ 'market.rally' | translate }}:</strong> {{ item.rally_nombre }}</p>
+        <p><strong>{{ 'market.team' | translate }}:</strong> {{ item.equipo }}</p>
+        <p><strong>{{ 'market.position' | translate }}:</strong> {{ item.posicion !== null ? item.posicion : ('market.outOfTop10' | translate) }}</p>
+        <p><strong>{{ 'market.points' | translate }}:</strong> {{ item.puntos }}</p>
         <hr />
       </div>
     </div>
 
     <div *ngIf="mostrarHistorial && historialElemento.length === 0">
-      <p>No hay historial disponible.</p>
+      <p>{{ 'market.noHistory' | translate }}</p>
     </div>
-
   </div>
 </div>

@@ -1,34 +1,38 @@
 <div class="perfil-container" *ngIf="usuario; else cargando">
 
   <!-- Botón reportar bug fuera del contenedor, pero con clase fija para posición -->
-  <button (click)="abrirPopupBug()" class="btn-reportar-bug">Reportar bug</button>
+  <button (click)="abrirPopupBug()" class="btn-reportar-bug">
+    {{ 'profile.reportBug' | translate }}
+  </button>
 
   <div class="perfil-card perfil-reorganizado">
     <!-- Información del usuario -->
     <div class="perfil-info">
-      <p><strong>Nombre de usuario:</strong> {{ usuario.username }}</p>
-      <p><strong>Correo electrónico:</strong> {{ usuario.email }}</p>
-      <p><strong>Nombre del equipo:</strong> {{ nombreEquipo }}</p>
-      <p><strong>Rol:</strong> {{ usuario.rol }}</p>
+      <p><strong>{{ 'profile.username' | translate }}:</strong> {{ usuario.username }}</p>
+      <p><strong>{{ 'profile.email' | translate }}:</strong> {{ usuario.email }}</p>
+      <p><strong>{{ 'profile.teamName' | translate }}:</strong> {{ nombreEquipo }}</p>
+      <p><strong>{{ 'profile.role' | translate }}:</strong> {{ usuario.rol }}</p>
     </div>
 
     <!-- Botones debajo de la info -->
     <div class="perfil-acciones-vertical">
-      <button (click)="mostrarPopup = true" class="btn-cambiar-nombre">Cambiar nombre del equipo</button>
+      <button (click)="mostrarPopup = true" class="btn-cambiar-nombre">
+        {{ 'profile.changeTeamName' | translate }}
+      </button>
 
       <!-- VIP toggle solo si NO es Admin -->
       <button *ngIf="!esAdmin" (click)="cambiarRol()" class="btn-cambiar-rol">
-        {{ esVIP ? 'Dejar de ser VIP' : 'Hacerse VIP' }}
+        {{ esVIP ? ('profile.stopBeingVIP' | translate) : ('profile.becomeVIP' | translate) }}
       </button>
 
       <!-- Admin toggle -->
       <button (click)="cambiarAdmin()" class="btn-hacerse-admin">
-        {{ esAdmin ? 'Dejar de ser Administrador' : 'Entrar como Administrador' }}
+        {{ esAdmin ? ('profile.stopBeingAdmin' | translate) : ('profile.becomeAdmin' | translate) }}
       </button>
 
       <!-- Gestión de bugs si es Admin -->
       <button *ngIf="esAdmin" (click)="irGestionBugs()" class="btn-gestion-bugs">
-        Gestionar bugs
+        {{ 'profile.manageBugs' | translate }}
       </button>
     </div>
   </div>
@@ -38,9 +42,11 @@
 <div class="overlay" *ngIf="mostrarPopup" (click)="cerrarPopup()">
   <div class="popup" (click)="$event.stopPropagation()">
     <div class="cambiar-nombre-container">
-      <label for="nombreEquipoInput">Nuevo nombre del equipo:</label>
+      <label for="nombreEquipoInput">{{ 'profile.newTeamName' | translate }}:</label>
       <input type="text" id="nombreEquipoInput" [(ngModel)]="nuevoNombreEquipo" class="input-nombre-equipo" />
-      <button (click)="cambiarNombreEquipo()" class="btn-guardar-nombre">Guardar</button>
+      <button (click)="cambiarNombreEquipo()" class="btn-guardar-nombre">
+        {{ 'profile.save' | translate }}
+      </button>
     </div>
   </div>
 </div>
@@ -48,16 +54,16 @@
 <!-- Popup para reportar bug -->
 <div class="overlay" *ngIf="mostrarPopupBug" (click)="cerrarPopupBug()">
   <div class="popup-bug" (click)="$event.stopPropagation()">
-    <h3>Reportar un bug</h3>
-    <textarea [(ngModel)]="descripcionBug" placeholder="Describe el problema..." rows="4"></textarea>
-    <button (click)="enviarReporteBug()">Enviar reporte</button>
-    <p *ngIf="reporteEnviado" class="mensaje-exito">Reporte enviado correctamente. ¡Gracias!</p>
+    <h3>{{ 'profile.reportBugTitle' | translate }}</h3>
+    <textarea [(ngModel)]="descripcionBug" placeholder="{{ 'profile.bugDescriptionPlaceholder' | translate }}" rows="4"></textarea>
+    <button (click)="enviarReporteBug()">{{ 'profile.sendReport' | translate }}</button>
+    <p *ngIf="reporteEnviado" class="mensaje-exito">{{ 'profile.reportSentSuccess' | translate }}</p>
     <p *ngIf="errorEnvio" class="mensaje-error">{{ errorEnvio }}</p>
   </div>
 </div>
 
 <ng-template #cargando>
   <div class="perfil-container">
-    <p>Cargando perfil...</p>
+    <p>{{ 'profile.loadingProfile' | translate }}</p>
   </div>
 </ng-template>

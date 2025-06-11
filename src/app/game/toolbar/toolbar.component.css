@@ -10,6 +10,10 @@
  margin-left: 2%;
 }
 
+.lang-toggle-toolbar {
+  margin-right: 30px;
+}
+
 .example-icon {
   flex-shrink: 0; /* Evita que se reduzca el tamaño */
 }

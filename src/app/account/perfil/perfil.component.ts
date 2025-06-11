@@ -6,11 +6,12 @@ import { RallyService } from '../../services/rally.service';
 import { BugReport, BugReportService } from '../../services/bug-report.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgIf], // Solo NgIf porque no usas NgFor ni NgClass en tu HTML
+  imports: [CommonModule, FormsModule, NgIf, TranslateModule],
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.css']
 })
@@ -35,17 +36,17 @@ export class PerfilComponent {
     private equipoService: RallyService,
     private bugReportService: BugReportService,
     private router: Router,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.cargarPerfil();
     this.equipoService.getNombreEquipo().subscribe({
       next: (data) => {
-        this.nombreEquipo = data.nombre || 'Mi Equipo';
+        this.nombreEquipo = data.nombre || this.translate.instant('profile.teamName');
       },
       error: (err) => {
-        console.error('Error al obtener el nombre del equipo:', err);
-        this.nombreEquipo = 'Mi Equipo';
+        this.nombreEquipo = this.translate.instant('profile.teamName');
       }
     });
   }
@@ -60,7 +61,7 @@ export class PerfilComponent {
       },
       error: (err) => {
         console.error(err);
-        this.error = 'No se pudo cargar la información del perfil.';
+        this.error = this.translate.instant('profile.profileLoadError');
       }
     });
   }
@@ -74,15 +75,15 @@ export class PerfilComponent {
         this.mostrarPopup = false;
         Swal.fire({
           icon: 'success',
-          title: '¡Nombre actualizado!',
-          text: data.mensaje || 'El nombre del equipo ha sido cambiado.',
+          title: this.translate.instant('profile.nameUpdated'),
+          text:  this.translate.instant('profile.teamNameChanged'),
           timer: 1000,
           showConfirmButton: false,
         });
       },
       error: (err) => {
         console.error(err);
-        Swal.fire('Error', 'No se pudo cambiar el nombre del equipo.', 'error');
+        Swal.fire('Error', this.translate.instant('profile.teamNameChangeError'), 'error');
       }
     });
   }
@@ -111,7 +112,6 @@ export class PerfilComponent {
         this.esAdmin = res.rol === 'Administrador';
       },
       error: (err) => {
-        console.error('Error al obtener perfil', err);
         this.esVIP = false;
         this.esAdmin = false;
       }
@@ -123,8 +123,7 @@ export class PerfilComponent {
       next: (res) => {
         Swal.fire({
           icon: 'success',
-          title: 'Rol cambiado',
-          text: res.mensaje,
+          title: this.translate.instant('profile.roleChanged'),
           timer: 1000,
           showConfirmButton: false,
         });
@@ -132,7 +131,7 @@ export class PerfilComponent {
       },
       error: (err) => {
         console.error(err);
-        Swal.fire('Error', 'No se pudo cambiar el rol', 'error');
+        Swal.fire('Error', this.translate.instant('profile.roleChangeError'), 'error');
       }
     });
   }
@@ -143,8 +142,7 @@ export class PerfilComponent {
         next: (res) => {
           Swal.fire({
             icon: 'success',
-            title: 'Rol cambiado',
-            text: res.mensaje,
+            title: this.translate.instant('profile.roleChanged'),
             timer: 1000,
             showConfirmButton: false,
           });
@@ -152,18 +150,18 @@ export class PerfilComponent {
         },
         error: (err) => {
           console.error(err);
-          Swal.fire('Error', 'No se pudo cambiar el rol de administrador', 'error');
+          Swal.fire('Error', this.translate.instant('profile.adminRoleChangeError'), 'error');
         }
       });
     } else {
       Swal.fire({
-        title: 'Clave de administrador',
+        title: this.translate.instant('profile.adminPasswordTitle'),
         input: 'password',
-        inputLabel: 'Introduce la clave para ser administrador',
-        inputPlaceholder: '••••',
-        confirmButtonText: 'Aceptar',
+        inputLabel: this.translate.instant('profile.adminPasswordLabel'),
+        inputPlaceholder: this.translate.instant('profile.adminPasswordPlaceholder'),
+        confirmButtonText: this.translate.instant('profile.adminPasswordConfirm'),
         showCancelButton: true,
-        cancelButtonText: 'Cancelar',
+        cancelButtonText: this.translate.instant('profile.adminPasswordCancel'),
       }).then((result) => {
         if (result.isConfirmed && result.value) {
           const clave = result.value;
@@ -171,8 +169,7 @@ export class PerfilComponent {
             next: (res) => {
               Swal.fire({
                 icon: 'success',
-                title: 'Rol cambiado',
-                text: res.mensaje,
+                title: this.translate.instant('profile.roleChanged'),
                 timer: 1000,
                 showConfirmButton: false,
               });
@@ -180,7 +177,7 @@ export class PerfilComponent {
             },
             error: (err) => {
               console.error(err);
-              const errorMsg = err.error?.mensaje || 'No se pudo cambiar el rol de administrador';
+              const errorMsg = err.error?.mensaje || this.translate.instant('profile.adminRoleChangeError');
               Swal.fire('Error', errorMsg, 'error');
             }
           });
@@ -191,7 +188,7 @@ export class PerfilComponent {
 
   enviarReporteBug() {
     if (!this.descripcionBug.trim()) {
-      this.errorEnvio = 'La descripción no puede estar vacía.';
+      this.errorEnvio = this.translate.instant('profile.bugDescriptionPlaceholder');
       return;
     }
 
@@ -209,20 +206,20 @@ export class PerfilComponent {
 
         Swal.fire({
           icon: 'success',
-          title: '¡Reporte enviado!',
-          text: 'Nos pondremos con él lo antes posible',
+          title: this.translate.instant('profile.bugReportSent'),
+          text: this.translate.instant('profile.bugReportThanks'),
           timer: 1000,
           showConfirmButton: false,
         });
       },
       error: (err) => {
-        this.errorEnvio = 'Error al enviar el reporte. Intenta de nuevo.';
+        this.errorEnvio = this.translate.instant('profile.bugReportSendError');
         console.error(err);
 
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'No se pudo enviar el reporte.',
+          text: this.translate.instant('profile.bugReportSendError'),
           confirmButtonColor: '#CB7CF8'
         });
       }

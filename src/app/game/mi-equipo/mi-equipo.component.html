@@ -1,26 +1,32 @@
 <div class="equipo-container">
-    <!-- Botón para mostrar puntos por rally -->
+  <!-- Botón para mostrar puntos por rally -->
   <div class="clasificacion-btn-container">
     <button class="ver-clasificacion-btn" (click)="mostrarClasificacion = true">
-      Puntos por rally
+      {{ 'team.pointsByRally' | translate }}
     </button>
   </div>
-  
+
   <h2>{{ nombreEquipo }}</h2>
 
   <div *ngIf="presupuesto !== null; else cargando">
-    <p class="presupuesto"><strong>Presupuesto disponible:</strong> {{ presupuesto |number:'1.2-2' }} €</p>
+    <p class="presupuesto">
+      <strong>{{ 'team.availableBudget' | translate }}:</strong>
+      {{ presupuesto | number:'1.2-2' }} €
+    </p>
 
     <div class="grid-layout">
       <!-- Columna Pilotos -->
       <div class="column">
-        <h3>Pilotos</h3>
+        <h3>{{ 'team.drivers' | translate }}</h3>
         <div *ngFor="let piloto of pilotos" class="card" (click)="abrirPopup('piloto', piloto)">
           <img [src]="piloto.bandera" width="30" />
           <p><strong>{{ piloto.nombre }}</strong></p>
           <p>{{ piloto.precio | number:'1.2-2' }} €</p>
           <div class="puntos">
-            <p class="pts"><Strong class="puntosStrong">{{ piloto.puntos_totales}}</Strong> pts</p>
+            <p class="pts">
+              <strong class="puntosStrong">{{ piloto.puntos_totales }}</strong>
+              {{ 'team.pts' | translate }}
+            </p>
           </div>
         </div>
       </div>
@@ -30,13 +36,16 @@
 
       <!-- Columna Copilotos -->
       <div class="column">
-        <h3>Copilotos</h3>
+        <h3>{{ 'team.codrivers' | translate }}</h3>
         <div *ngFor="let copiloto of copilotos" class="card" (click)="abrirPopup('copiloto', copiloto)">
           <img [src]="copiloto.bandera" width="30" />
           <p><strong>{{ copiloto.nombre }}</strong></p>
           <p>{{ copiloto.precio | number:'1.2-2' }} €</p>
           <div class="puntos">
-            <p class="pts"><Strong class="puntosStrong">{{ copiloto.puntos_totales}}</Strong> pts</p>
+            <p class="pts">
+              <strong class="puntosStrong">{{ copiloto.puntos_totales }}</strong>
+              {{ 'team.pts' | translate }}
+            </p>
           </div>
         </div>
       </div>
@@ -46,13 +55,16 @@
 
       <!-- Columna Coches -->
       <div class="column">
-        <h3>Coche</h3>
+        <h3>{{ 'team.car' | translate }}</h3>
         <div *ngFor="let coche of coches" class="card" (click)="abrirPopup('coche', coche)">
           <img [src]="coche.imagen" width="100" />
           <p><strong>{{ coche.modelo }}</strong></p>
           <p>{{ coche.precio | number:'1.2-2' }} €</p>
           <div class="puntos">
-            <p class="pts"> <Strong class="puntosStrong">{{ coche.puntos_totales}}</Strong> pts</p>
+            <p class="pts">
+              <strong class="puntosStrong">{{ coche.puntos_totales }}</strong>
+              {{ 'team.pts' | translate }}
+            </p>
           </div>
         </div>
       </div>
@@ -61,7 +73,7 @@
 
   <ng-template #cargando>
     <p *ngIf="error">{{ error }}</p>
-    <p *ngIf="!error">Cargando equipo...</p>
+    <p *ngIf="!error">{{ 'team.loadingTeam' | translate }}</p>
   </ng-template>
 </div>
 
@@ -71,22 +83,22 @@
     <img [src]="elementoSeleccionado.bandera || elementoSeleccionado.imagen" width="60" />
     <p><strong>{{ elementoSeleccionado.nombre || elementoSeleccionado.modelo }}</strong></p>
     <p>{{ elementoSeleccionado.precio | currency }}</p>
-    <button (click)="vender()">Vender</button>
+    <button (click)="vender()">{{ 'team.sell' | translate }}</button>
   </div>
 </div>
 
 <!-- Modal de clasificación por rally -->
 <div class="overlay" *ngIf="mostrarClasificacion" (click)="mostrarClasificacion = false">
   <div class="popup clasificacion-popup" (click)="$event.stopPropagation()">
-    <h3>Puntos por Rally</h3>
+    <h3>{{ 'team.rallyPoints' | translate }}</h3>
     <ul *ngIf="clasificacionUsuario.length > 0; else sinDatos">
       <li *ngFor="let entrada of clasificacionUsuario">
-        <strong>{{ entrada.rally }}</strong>: {{ entrada.puntos }} pts
+        <strong>{{ entrada.rally }}</strong>: {{ entrada.puntos }} {{ 'team.pts' | translate }}
       </li>
     </ul>
     <ng-template #sinDatos>
-      <p>No se encontraron puntos para tu equipo aún.</p>
+      <p>{{ 'team.noPointsYet' | translate }}</p>
     </ng-template>
-    <button (click)="mostrarClasificacion = false">Cerrar</button>
+    <button (click)="mostrarClasificacion = false">{{ 'team.close' | translate }}</button>
   </div>
 </div>

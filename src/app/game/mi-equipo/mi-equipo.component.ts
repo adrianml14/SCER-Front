@@ -4,18 +4,20 @@ import { RallyService } from '../../services/rally.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import Swal from 'sweetalert2';
 import { UserService } from '../../services/users.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-mi-equipo',
-  imports: [CommonModule, MatTabsModule],
+  standalone: true,
+  imports: [CommonModule, MatTabsModule, TranslateModule],
   templateUrl: './mi-equipo.component.html',
   styleUrls: ['./mi-equipo.component.css']
 })
 export class MiEquipoComponent implements OnInit {
   presupuesto: number | null = null;
-  nombreEquipo: string = 'Mi Equipo';
+  nombreEquipo: string = '';
   error: string = '';
-  clasificacionUsuario: any[] = []; // puntos por rally del usuario
+  clasificacionUsuario: any[] = [];
   mostrarClasificacion: boolean = false;
   usuarioUsername: string = '';
 
@@ -26,84 +28,84 @@ export class MiEquipoComponent implements OnInit {
   elementoSeleccionado: any = null;
   tipoSeleccionado: 'piloto' | 'copiloto' | 'coche' | null = null;
 
-  constructor(private equipoService: RallyService, private userService: UserService) {}
-
+  constructor(
+    private equipoService: RallyService,
+    private userService: UserService,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit(): void {
-  const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
 
-  if (!token) {
-    this.error = 'No se encontró el token. Por favor, inicia sesión nuevamente.';
-    return;
+    if (!token) {
+      this.error = this.translate.instant('team.tokenNotFound');
+      return;
+    }
+
+    this.userService.getPerfil().subscribe({
+      next: (perfil) => {
+        this.usuarioUsername = perfil.username;
+
+        this.equipoService.getClasificacionPorRally().subscribe({
+          next: (data) => {
+            this.clasificacionUsuario = data
+              .map((rallyEntry: any) => {
+                const userEntry = rallyEntry.clasificacion.find(
+                  (c: any) => c.usuario === this.usuarioUsername
+                );
+                return userEntry ? { rally: rallyEntry.rally, puntos: userEntry.puntos } : null;
+              })
+              .filter((entry: any) => entry !== null);
+          },
+          error: (err) => {
+            console.error('Error al cargar la clasificación por rally:', err);
+          }
+        });
+      },
+      error: (err) => {
+        this.error = this.translate.instant('team.profileLoadError');
+      }
+    });
+
+    this.equipoService.getPresupuesto().subscribe({
+      next: (data) => this.presupuesto = data.presupuesto,
+      error: (err) => {
+        this.error = this.translate.instant('team.budgetLoadError');
+      }
+    });
+
+    this.equipoService.getNombreEquipo().subscribe({
+      next: (data) => {
+        this.nombreEquipo = data.nombre || this.translate.instant('team.teamNameDefault');
+      },
+      error: (err) => {
+        this.nombreEquipo = this.translate.instant('team.teamNameDefault');
+        this.error = this.translate.instant('team.teamNameLoadError');
+      }
+    });
+
+    this.equipoService.getMisPilotos().subscribe({
+      next: (data) => this.pilotos = data,
+      error: () => {
+        this.error = this.translate.instant('team.driversLoadError');
+      }
+    });
+
+    this.equipoService.getMisCopilotos().subscribe({
+      next: (data) => this.copilotos = data,
+      error: () => {
+        this.error = this.translate.instant('team.coDriversLoadError');
+      }
+    });
+
+    this.equipoService.getMisCoches().subscribe({
+      next: (data) => this.coches = data,
+      error: () => {
+        console.error('Error al cargar coches');
+        this.error = this.translate.instant('team.carsLoadError');
+      }
+    });
   }
-
-  // Obtener perfil del usuario para luego filtrar clasificación
-  this.userService.getPerfil().subscribe({
-    next: (perfil) => {
-      this.usuarioUsername = perfil.username;
-
-      // Obtener clasificación por rally y filtrar solo los puntos del usuario actual
-      this.equipoService.getClasificacionPorRally().subscribe({
-        next: (data) => {
-          // Suponiendo que cada entrada tiene: rally, clasificacion[]
-          this.clasificacionUsuario = data
-            .map((rallyEntry: any) => {
-              const userEntry = rallyEntry.clasificacion.find(
-                (c: any) => c.usuario === this.usuarioUsername
-              );
-              return userEntry ? { rally: rallyEntry.rally, puntos: userEntry.puntos } : null;
-            })
-            .filter((entry: any) => entry !== null);
-        },
-        error: (err) => {
-          console.error('Error al cargar la clasificación por rally:', err);
-        }
-      });
-    },
-    error: (err) => {
-      console.error('Error al obtener perfil del usuario:', err);
-      this.error = 'No se pudo cargar el perfil del usuario.';
-    }
-  });
-
-  // Obtener presupuesto
-  this.equipoService.getPresupuesto().subscribe({
-    next: (data) => this.presupuesto = data.presupuesto,
-    error: (err) => {
-      console.error('Error al obtener el presupuesto:', err);
-      this.error = 'No se pudo cargar el presupuesto';
-    }
-  });
-
-  // Obtener nombre del equipo
-  this.equipoService.getNombreEquipo().subscribe({
-    next: (data) => {
-      console.log('Nombre del equipo recibido:', data.nombre);
-      this.nombreEquipo = data.nombre || 'Mi Equipo';
-    },
-    error: (err) => {
-      console.error('Error al obtener el nombre del equipo:', err);
-      this.nombreEquipo = 'Mi Equipo';
-    }
-  });
-
-  // Cargar elementos del equipo
-  this.equipoService.getMisPilotos().subscribe({
-    next: (data) => this.pilotos = data,
-    error: () => console.error('Error al cargar pilotos')
-  });
-
-  this.equipoService.getMisCopilotos().subscribe({
-    next: (data) => this.copilotos = data,
-    error: () => console.error('Error al cargar copilotos')
-  });
-
-  this.equipoService.getMisCoches().subscribe({
-    next: (data) => this.coches = data,
-    error: () => console.error('Error al cargar coches')
-  });
-}
-
 
   abrirPopup(tipo: 'piloto' | 'copiloto' | 'coche', item: any) {
     this.tipoSeleccionado = tipo;
@@ -124,7 +126,7 @@ export class MiEquipoComponent implements OnInit {
     this.equipoService.venderElemento(tipo, idElemento).subscribe({
       next: (data) => {
         Swal.fire({
-          title: data.mensaje || 'Elemento vendido exitosamente',
+          title: this.translate.instant('team.sellSuccess'),
           icon: 'success',
           timer: 1000,
           showConfirmButton: false,
@@ -146,8 +148,7 @@ export class MiEquipoComponent implements OnInit {
         this.cerrarPopup();
       },
       error: (err) => {
-        console.error('Error al vender el elemento:', err);
-        this.error = 'No se pudo vender el elemento';
+        this.error = this.translate.instant('team.sellError');
       }
     });
   }

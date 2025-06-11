@@ -4,14 +4,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/users.service';
-import { RallyService } from '../../services/rally.service'; // <-- añadido
+import { RallyService } from '../../services/rally.service';
 import Swal from 'sweetalert2';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   standalone: true,
   selector: 'app-ligas',
   templateUrl: './ligas.component.html',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   styleUrls: ['./ligas.component.css']
 })
 export class LigasComponent implements OnInit {
@@ -32,8 +33,9 @@ export class LigasComponent implements OnInit {
   constructor(
     private ligasService: LigasService,
     private userService: UserService,
-    private rallyService: RallyService, // <-- añadido aquí
-    private router: Router
+    private rallyService: RallyService,
+    private router: Router,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -61,15 +63,19 @@ export class LigasComponent implements OnInit {
 
   crearLiga() {
     if (!this.nombreNuevaLiga.trim()) {
-      Swal.fire('Nombre requerido', 'Por favor ingresa un nombre para la liga.', 'warning');
+      Swal.fire(
+        this.translate.instant('common.required'),
+        this.translate.instant('leagues.leagueNamePlaceholder'),
+        'warning'
+      );
       return;
     }
 
     this.ligasService.crearLiga(this.nombreNuevaLiga).subscribe({
       next: (response) => {
         Swal.fire({
-          title: 'Liga creada',
-          text: `Código: ${response.codigo_unico}`,
+          title: this.translate.instant('leagues.createLeague'),
+          text: `${this.translate.instant('leagues.code')}: ${response.codigo_unico}`,
           icon: 'success',
           timer: 2000,
           showConfirmButton: false
@@ -77,9 +83,9 @@ export class LigasComponent implements OnInit {
         this.actualizarLigas();
         this.cerrarPopup();
       },
-      error: (error) => {
-        console.error('Error al crear liga', error);
-        Swal.fire('Error', 'No se pudo crear la liga', 'error');
+      error: () => {
+        console.error('Error al crear liga');
+        Swal.fire('Error', this.translate.instant('common.createError'), 'error');
       }
     });
   }
@@ -124,18 +130,22 @@ export class LigasComponent implements OnInit {
 
   agregarParticipante() {
     if (!this.nuevoParticipanteUsername.trim()) {
-      Swal.fire('Campo vacío', 'Ingresa el nombre de usuario', 'warning');
+      Swal.fire(
+        this.translate.instant('common.required'),
+        this.translate.instant('common.enterUsername'),
+        'warning'
+      );
       return;
     }
 
     this.ligasService.agregarParticipante(this.ligaSeleccionada.id, this.nuevoParticipanteUsername).subscribe({
       next: () => {
-        Swal.fire('Éxito', 'Participante agregado', 'success');
+        Swal.fire(this.translate.instant('common.success'), this.translate.instant('common.userAdded'), 'success');
         this.obtenerParticipantes();
       },
-      error: (error) => {
-        console.error('Error al agregar participante', error);
-        Swal.fire('Error', 'No se pudo agregar el participante', 'error');
+      error: () => {
+        console.error('Error al agregar participante');
+        Swal.fire('Error', this.translate.instant('common.userAddError'), 'error');
       }
     });
   }
@@ -143,12 +153,12 @@ export class LigasComponent implements OnInit {
   eliminarParticipante(username: string) {
     this.ligasService.eliminarParticipante(this.ligaSeleccionada.id, username).subscribe({
       next: () => {
-        Swal.fire('Eliminado', 'Participante eliminado', 'success');
+        Swal.fire(this.translate.instant('common.deleted'), this.translate.instant('common.userDeleted'), 'success');
         this.obtenerParticipantes();
       },
-      error: (error) => {
-        console.error('Error al eliminar participante', error);
-        Swal.fire('Error', 'No se pudo eliminar el participante', 'error');
+      error: () => {
+        console.error('Error al eliminar participante');
+        Swal.fire('Error', this.translate.instant('common.userDeleteError'), 'error');
       }
     });
   }
@@ -157,16 +167,16 @@ export class LigasComponent implements OnInit {
     this.ligasService.salirDeLiga(ligaId).subscribe({
       next: () => {
         Swal.fire({
-          title: 'Te Saliste de la liga',
+          title: this.translate.instant('leagues.leave'),
           icon: 'success',
           timer: 1500,
           showConfirmButton: false
         });
         this.actualizarLigas();
       },
-      error: (error) => {
-        console.error('Error al salir de la liga', error);
-        Swal.fire('Error', 'No se pudo salir de la liga', 'error');
+      error: () => {
+        console.error('Error al salir de la liga');
+        Swal.fire('Error', this.translate.instant('common.leaveError'), 'error');
       }
     });
   }
@@ -193,14 +203,18 @@ export class LigasComponent implements OnInit {
 
   unirseConCodigo() {
     if (!this.codigoUnirse.trim()) {
-      Swal.fire('Código requerido', 'Por favor ingresa un código', 'warning');
+      Swal.fire(
+        this.translate.instant('common.required'),
+        this.translate.instant('leagues.codePlaceholder'),
+        'warning'
+      );
       return;
     }
 
     this.ligasService.unirsePorCodigo(this.codigoUnirse).subscribe({
       next: (res) => {
         Swal.fire({
-          title: res.mensaje || 'Te has unido a la liga',
+          title: res.mensaje || this.translate.instant('leagues.joinLeague'),
           icon: 'success',
           timer: 1500,
           showConfirmButton: false
@@ -209,7 +223,7 @@ export class LigasComponent implements OnInit {
         this.cerrarPopup();
       },
       error: (error) => {
-        Swal.fire('Error', error.error.error || 'Código incorrecto', 'error');
+        Swal.fire('Error', error.error.error || this.translate.instant('common.invalidCode'), 'error');
       }
     });
   }
